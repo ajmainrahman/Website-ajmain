@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -58,9 +58,8 @@
   --color-sidebar-accent-border: var(--sidebar-accent-border);
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  --font-sans: 'Space Grotesk', sans-serif;
-  --font-mono: 'Space Mono', monospace;
-  --font-serif: var(--app-font-serif);
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Crimson Pro', serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -75,55 +74,54 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  /* Light Theme: Warm Off-White & Deep Indigo */
-  --background: 40 33% 98%;      /* Soft warm off-white */
-  --foreground: 230 40% 15%;     /* Deep indigo/navy text */
-  --border: 230 20% 85%;         /* Soft indigo-tinted border */
+  /* Light Theme: Warm Off-White, Deep Ink text, Burgundy accent */
+  --background: 40 20% 98%;
+  --foreground: 220 20% 15%;
+  --border: 220 15% 85%;
   
-  --card: 40 33% 98%;
-  --card-foreground: 230 40% 15%;
-  --card-border: 230 20% 85%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 20% 15%;
+  --card-border: 220 15% 85%;
   
-  --sidebar: 40 33% 96%;
-  --sidebar-foreground: 230 40% 15%;
-  --sidebar-border: 230 20% 85%;
-  --sidebar-primary: 230 40% 15%;
-  --sidebar-primary-foreground: 40 33% 98%;
-  --sidebar-accent: 230 20% 90%;
-  --sidebar-accent-foreground: 230 40% 15%;
-  --sidebar-ring: 25 80% 55%;
+  --sidebar: 40 20% 98%;
+  --sidebar-foreground: 220 20% 15%;
+  --sidebar-border: 220 15% 85%;
+  --sidebar-primary: 220 20% 15%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 15% 90%;
+  --sidebar-accent-foreground: 220 20% 15%;
+  --sidebar-ring: 350 45% 35%;
   
-  --popover: 40 33% 98%;
-  --popover-foreground: 230 40% 15%;
-  --popover-border: 230 20% 85%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 20% 15%;
+  --popover-border: 220 15% 85%;
   
-  --primary: 230 40% 15%;        /* Deep Indigo */
-  --primary-foreground: 40 33% 98%;
+  --primary: 220 20% 15%;
+  --primary-foreground: 0 0% 100%;
   
-  --secondary: 230 20% 90%;      /* Soft grey-indigo */
-  --secondary-foreground: 230 40% 15%;
+  --secondary: 220 15% 94%;
+  --secondary-foreground: 220 20% 15%;
   
-  --muted: 230 20% 90%;
-  --muted-foreground: 230 20% 40%;
+  --muted: 220 15% 94%;
+  --muted-foreground: 220 15% 45%;
   
-  --accent: 25 80% 55%;          /* Burnt Orange / Copper Accent */
-  --accent-foreground: 40 33% 98%;
+  --accent: 350 45% 35%; /* Burgundy */
+  --accent-foreground: 0 0% 100%;
   
   --destructive: 0 84% 60%;
-  --destructive-foreground: 40 33% 98%;
+  --destructive-foreground: 0 0% 100%;
   
-  --input: 230 20% 85%;
-  --ring: 25 80% 55%;            /* Accent ring */
+  --input: 220 15% 85%;
+  --ring: 350 45% 35%;
   
-  --chart-1: 230 40% 15%;
-  --chart-2: 25 80% 55%;
+  --chart-1: 220 20% 15%;
+  --chart-2: 350 45% 35%;
   --chart-3: 160 30% 40%;
   --chart-4: 200 40% 30%;
   --chart-5: 330 40% 40%;
 
-  --app-font-sans: 'Space Grotesk', sans-serif;
-  --app-font-serif: Georgia, serif;
-  --app-font-mono: 'Space Mono', monospace;
+  --app-font-sans: 'Inter', sans-serif;
+  --app-font-serif: 'Crimson Pro', serif;
   --radius: 0.25rem;
   
   --shadow-sm: 0px 1px 2px 0px rgba(0,0,0, 0.05);
@@ -146,48 +144,48 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  /* Dark Theme: Deep Indigo / Navy */
-  --background: 230 40% 6%;
-  --foreground: 230 20% 90%;
-  --border: 230 30% 15%;
+  /* Dark Theme: Deep Ink / Charcoal Background */
+  --background: 220 20% 8%;
+  --foreground: 40 20% 94%;
+  --border: 220 15% 20%;
   
-  --card: 230 40% 8%;
-  --card-foreground: 230 20% 90%;
-  --card-border: 230 30% 15%;
+  --card: 220 20% 10%;
+  --card-foreground: 40 20% 94%;
+  --card-border: 220 15% 20%;
   
-  --sidebar: 230 40% 8%;
-  --sidebar-foreground: 230 20% 90%;
-  --sidebar-border: 230 30% 15%;
-  --sidebar-primary: 25 80% 55%;
-  --sidebar-primary-foreground: 230 40% 6%;
-  --sidebar-accent: 230 30% 15%;
-  --sidebar-accent-foreground: 230 20% 90%;
-  --sidebar-ring: 25 80% 55%;
+  --sidebar: 220 20% 8%;
+  --sidebar-foreground: 40 20% 94%;
+  --sidebar-border: 220 15% 20%;
+  --sidebar-primary: 350 45% 45%;
+  --sidebar-primary-foreground: 220 20% 8%;
+  --sidebar-accent: 220 15% 15%;
+  --sidebar-accent-foreground: 40 20% 94%;
+  --sidebar-ring: 350 45% 45%;
   
-  --popover: 230 40% 8%;
-  --popover-foreground: 230 20% 90%;
-  --popover-border: 230 30% 15%;
+  --popover: 220 20% 10%;
+  --popover-foreground: 40 20% 94%;
+  --popover-border: 220 15% 20%;
   
-  --primary: 25 80% 55%;         /* Burnt Orange Accent */
-  --primary-foreground: 230 40% 6%;
+  --primary: 40 20% 94%;
+  --primary-foreground: 220 20% 8%;
   
-  --secondary: 230 30% 15%;
-  --secondary-foreground: 230 20% 90%;
+  --secondary: 220 15% 15%;
+  --secondary-foreground: 40 20% 94%;
   
-  --muted: 230 30% 15%;
-  --muted-foreground: 230 20% 60%;
+  --muted: 220 15% 15%;
+  --muted-foreground: 220 15% 65%;
   
-  --accent: 25 80% 55%;
-  --accent-foreground: 230 40% 6%;
+  --accent: 350 45% 45%; /* Lighter Burgundy for dark mode */
+  --accent-foreground: 220 20% 8%;
   
   --destructive: 0 84% 60%;
-  --destructive-foreground: 230 20% 90%;
+  --destructive-foreground: 40 20% 94%;
   
-  --input: 230 30% 15%;
-  --ring: 25 80% 55%;
+  --input: 220 15% 20%;
+  --ring: 350 45% 45%;
   
-  --chart-1: 25 80% 55%;
-  --chart-2: 230 40% 30%;
+  --chart-1: 350 45% 45%;
+  --chart-2: 220 20% 60%;
   --chart-3: 160 30% 40%;
   --chart-4: 200 40% 30%;
   --chart-5: 330 40% 40%;
@@ -199,12 +197,10 @@
   }
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    /* subtle grid background pattern */
-    background-image: 
-      linear-gradient(to right, rgba(128, 128, 128, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: center center;
+  }
+  
+  h1, h2, h3, h4, h5, h6, .font-serif {
+    @apply font-serif;
   }
   
   /* Scrollbar */
@@ -215,7 +211,7 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted));
+    background: hsl(var(--border));
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {

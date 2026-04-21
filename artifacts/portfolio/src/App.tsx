@@ -2,17 +2,35 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Layout from "@/components/Layout";
+
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Biography from "@/pages/Biography";
+import Research from "@/pages/Research";
+import Projects from "@/pages/Projects";
+import ECA from "@/pages/ECA";
+import Hobbies from "@/pages/Hobbies";
+import Contact from "@/pages/Contact";
 
 const queryClient = new QueryClient();
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <Layout>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/biography" component={Biography} />
+        <Route path="/research" component={Research} />
+        <Route path="/projects" component={Projects} />
+        <Route path="/eca" component={ECA} />
+        <Route path="/hobbies" component={Hobbies} />
+        <Route path="/contact" component={Contact} />
+        <Route component={NotFound} />
+      </Switch>
+    </Layout>
   );
 }
 
