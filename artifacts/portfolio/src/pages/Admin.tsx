@@ -161,14 +161,11 @@ function LogoutButton() {
   const queryClient = useQueryClient();
 
   const handleLogout = () => {
-    logout.mutate(
-      {},
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: getAdminMeQueryKey() });
-        },
-      }
-    );
+    logout.mutate(undefined, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: getAdminMeQueryKey() });
+      },
+    });
   };
 
   return (

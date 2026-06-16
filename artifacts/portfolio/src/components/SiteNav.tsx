@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Github, Linkedin, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,8 +23,9 @@ export default function SiteNav() {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="font-serif font-bold text-xl tracking-tight hover:text-accent transition-colors">
-          M.R.A.
+        <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+          <Logo size={32} />
+          <span className="font-serif font-bold text-xl tracking-tight">M.R.A.</span>
         </Link>
         
         {/* Desktop Nav */}
