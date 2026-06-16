@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm -r --filter './artifacts/portfolio' run build",
+  "outputDirectory": "artifacts/portfolio/dist",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/index.ts": {
+      "runtime": "@vercel/node@5"
+    }
+  }
+}
