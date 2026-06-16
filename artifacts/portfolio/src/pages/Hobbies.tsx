@@ -1,10 +1,11 @@
 import { ExternalLink, Star } from "lucide-react";
 import * as LucideIcons from "lucide-react";
-import { useListHobbies, useListBlogPosts } from "@workspace/api-client-react";
+import { useListHobbies, useListBlogPosts, useListPhotos } from "@workspace/api-client-react";
 
 export default function Hobbies() {
   const { data: hobbies } = useListHobbies();
   const { data: blogPosts } = useListBlogPosts();
+  const { data: photos } = useListPhotos();
 
   const renderIcon = (iconName: string | null | undefined) => {
     if (!iconName) return <Star size={28} className="text-accent" />;
@@ -84,6 +85,33 @@ export default function Hobbies() {
           </div>
         ) : (
           <p className="text-muted-foreground italic">No blog posts published yet.</p>
+        )}
+      </section>
+
+      {/* Photography Section */}
+      <section className="space-y-12">
+        <header className="space-y-4 border-b border-border pb-8">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold">Photography</h2>
+        </header>
+
+        {photos && photos.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {photos.map((photo) => (
+              <div key={photo.id} className="flex flex-col gap-2">
+                <div className="aspect-square bg-muted rounded-lg overflow-hidden border border-border">
+                  <img src={photo.imageUrl} alt={photo.caption || "Photo"} className="w-full h-full object-cover" />
+                </div>
+                {(photo.caption || photo.date) && (
+                  <div className="px-1">
+                    {photo.caption && <p className="text-sm font-medium leading-tight">{photo.caption}</p>}
+                    {photo.date && <p className="text-xs text-muted-foreground font-mono mt-1">{photo.date}</p>}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted-foreground italic">No photos yet — add them via the Admin Panel</p>
         )}
       </section>
 

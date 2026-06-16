@@ -1,0 +1,457 @@
+Build me a complete personal portfolio website from scratch. This is a migration from my current Google Sites portfolio. Below is the full content, structure, and requirements.
+
+---
+
+## TECH STACK
+- Frontend: React + TypeScript + Vite
+- Styling: Tailwind CSS
+- Backend: Express.js (Node)
+- Database: Neon PostgreSQL
+- Deployment: Vercel
+- File/CV Storage: Google Drive links
+
+---
+
+## SITE STRUCTURE (Navigation)
+1. Home
+2. About
+3. Education
+4. Research
+5. Projects (with two sub-categories)
+6. Extra Curricular
+7. Stories & Updates
+8. Admin Panel (/admin — password protected)
+
+---
+
+## PAGE 1: HOME
+
+### Content:
+- Full name: Moshfiqur Rahman Ajmain
+- Two taglines:
+  - "🔍 Always learning. Always experimenting."
+  - "💡 Building AI that understands both data and people."
+- Social links: LinkedIn, GitHub, Medium, Email (as icon buttons)
+- Key Technologies chips/tags: Python, EDA, Supervised Learning, Unsupervised Learning (and more to be added via Admin Panel)
+
+### Features to build:
+- Circular profile picture (LinkedIn-style round avatar) in the hero section
+- If no image is set, show a default silhouette placeholder
+- Profile picture URL managed from Admin Panel
+- Smooth scroll navigation
+- Mobile responsive hero layout
+
+---
+
+## PAGE 2: ABOUT
+
+### Content:
+- Name: Moshfiqur Rahman Ajmain
+- Degree: BSc in Computer Science & Engineering, Daffodil International University, CGPA 3.70
+- Social links: LinkedIn, GitHub, Medium, Email
+- Full bio paragraph (I will paste this later via Admin Panel)
+- Personal quote: Oliver Goldsmith quote (I will add via Admin Panel)
+- Bengali quote at bottom (I will add via Admin Panel)
+
+### Skills sections:
+- Data Analyst Skills (bullet list)
+- Data Scientist Skills (bullet list)
+- Both managed from Admin Panel
+
+### Download CV button:
+- Links to a Google Drive file
+- Use format: https://drive.google.com/uc?export=download&id=FILE_ID
+- CV Google Drive link stored and editable in Admin Panel
+- Button opens download in new tab
+
+### Certificates Section (MAJOR SECTION):
+Display 40+ certificates in a filterable card grid. Each card shows:
+- Certificate Name
+- Issuing Organization
+- Date (if available)
+- Credential link (if available)
+- Type badge (Course / Volunteering / Workshop / Seminar)
+
+Filter bar at top with these category buttons:
+- All
+- DataCamp
+- Bohubrihi
+- GoEdu
+- 10 Minute School
+- Interactive Cares
+- Volunteering
+- Workshop & Seminar
+- Other
+
+Pre-load these certificates into the database:
+
+**DataCamp / LLM / Data Scientist:**
+- Introduction to Claude AI — DataCamp
+- AI Fundamentals — DataCamp
+- Understanding Artificial Intelligence — DataCamp
+- Introduction to ChatGPT — DataCamp
+- Working with Llama 3 — DataCamp
+- Prompt Engineering — DataCamp
+- Introduction to LLMs in Python — DataCamp
+- Developing LLM Applications with LangChain — DataCamp
+- [Category: DataCamp]
+
+**Bohubrihi:**
+- SQL for Data Analysis
+- Data Analysis with Python
+- Microsoft PowerPoint
+- Stress Management
+- Google Workspace
+- Digital Marketing Fundamentals
+- [Category: Bohubrihi]
+
+**GoEdu (13 certificates):**
+- Object Oriented Programming
+- Leadership Skills
+- Resume Writing
+- Self-Esteem & Confidence
+- Communication Skills
+- Time Management
+- Critical Thinking
+- Problem Solving
+- Teamwork & Collaboration
+- Public Speaking
+- Emotional Intelligence
+- Personal Branding
+- Goal Setting
+- [Category: GoEdu]
+
+**10 Minute School (14 certificates):**
+- Facebook Marketing
+- Leadership
+- Digital Marketing
+- Graphic Design Basics
+- MS Office
+- Freelancing
+- English Communication
+- Presentation Skills
+- Content Writing
+- SEO Fundamentals
+- Social Media Marketing
+- Video Editing
+- Soft Skills Development
+- Career Guidance
+- [Category: 10 Minute School]
+
+**Volunteering Certificates:**
+- Smartifier Academy — Campus Ambassador
+- Interactive Cares — Campus Ambassador
+- InstantKaj.com — Campus Ambassador
+- Kalke — Campus Ambassador
+- Campus Lite — Campus Ambassador
+- BSCA — Bangladesh Science Congress Association
+- Show the Creativity — Volunteer
+- [Category: Volunteering]
+
+**Workshop & Seminar:**
+- (10+ items — I will add via Admin Panel)
+- [Category: Workshop & Seminar]
+
+---
+
+## PAGE 3: EDUCATION
+(This was previously called "Biography" — keep it as "Education")
+
+Each education entry shows:
+- Degree / Program name
+- Institution name
+- Duration (e.g., 2019 – 2023)
+- CGPA / Grade (optional)
+- Description / Achievements
+
+Pre-load:
+- BSc in Computer Science & Engineering — Daffodil International University — 2019–2023 — CGPA 3.70
+
+Managed fully from Admin Panel (add/edit/delete).
+
+---
+
+## PAGE 4: RESEARCH
+
+Section header: "Selected Research Papers"
+
+Each research paper card shows:
+- Title
+- Authors
+- Abstract (expandable — show first 2 lines, expand on click)
+- Publication Venue
+- Year
+- Tags/Keywords (as chips)
+- Paper Link / DOI button (if available)
+
+Filter bar: by Year, by Tag/Keyword
+
+Pre-load these 5 papers:
+1. Title: "Benchmark Diagnostic MRI and Medical Imaging Dataset"
+   - Tags: Medical Imaging, Dataset, Deep Learning
+
+2. Title: "Deep Learning for Lung Cancer Detection & Classification"
+   - Tags: Deep Learning, Medical, Computer Vision
+
+3. Title: "BLP-2023 Task 1: Violence Inciting Text Detection"
+   - Tags: NLP, Bengali, Text Classification
+
+4. Title: "Survey-based ML for Hair Fall Disorder Diagnosis"
+   - Tags: Machine Learning, Healthcare, Survey
+
+5. Title: "Sentiment Analysis on Junk Food Social Media Reviews"
+   - Tags: NLP, Sentiment Analysis, Social Media
+
+(I will fill in full authors, abstracts, links via Admin Panel)
+
+Sub-page: Publications — a separate paginated list of all publications
+
+---
+
+## PAGE 5: PROJECTS
+
+Two clearly separated tabs or sections:
+
+### Tab 1: Data Analytics
+Projects related to data analysis, dashboards, EDA, visualization, SQL.
+
+### Tab 2: ML / AI Research
+Projects related to machine learning, deep learning, NLP, computer vision, LLMs.
+
+Each project card shows:
+- Project Title
+- Short Description
+- Tech Stack (as tags)
+- Category (Data Analytics / ML AI Research)
+- GitHub Link button
+- Live Demo Link button (optional)
+- Thumbnail image (optional)
+
+Also show on the page:
+- "250+ problems solved since 2020 on: Breecrow, HackerRank, Toph, LeetCode, StrataScratch, DataLemur" — as a highlighted stat banner
+
+Managed fully from Admin Panel.
+
+---
+
+## PAGE 6: EXTRA CURRICULAR
+
+### Campus Ambassador Roles (card grid):
+Each card shows: Organization name, Role, Duration, Logo/image (optional)
+
+Pre-load:
+- Bohubrihi — Campus Ambassador — Nov 2022 – Sep 2023
+- Riseup Labs — Campus Ambassador
+- Interactive Cares — Campus Ambassador
+- InstantKaj.com — Campus Ambassador
+- Best Aid — Campus Ambassador
+- Smartifier Academy — Campus Ambassador
+- Show the Creativity — Volunteer
+- BSCA — Bangladesh Science Congress Association
+- Kalke — Campus Ambassador
+- iBOS — Campus Ambassador
+- Newspaper Olympiad — Participant
+- 10 Minute School — Campus Ambassador
+
+### Hobbies & Interests (expandable cards or icon grid):
+- Photography
+- Digital Marketing
+- Writing / Blogging
+- Travel
+- Reading
+- Research
+- Technology Exploration
+- Public Speaking
+- Volunteering
+(Managed from Admin Panel — add/edit/delete with emoji icon and description)
+
+### Blog Posts Section:
+Each blog post card shows:
+- Title
+- Short excerpt (2–3 lines)
+- Platform (Medium / LinkedIn / Personal)
+- Date
+- Cover image URL (optional)
+- "Read More" button linking to external URL
+
+Managed from Admin Panel.
+
+### Photography Section:
+Image gallery grid (I will add image URLs via Admin Panel)
+
+### Sub-pages:
+- International Affairs — text + images (editable from Admin Panel)
+- Stories & Updates — journal/update posts (add/edit/delete from Admin Panel)
+
+---
+
+## PAGE 7: STORIES & UPDATES
+
+A simple chronological feed of personal updates, milestones, and stories.
+
+Each entry:
+- Title
+- Date
+- Body text (short paragraph)
+- Optional image
+
+Managed fully from Admin Panel.
+
+---
+
+## PAGE 8: ADMIN PANEL (/admin)
+
+### Login:
+- Simple password login screen
+- Password stored in environment variable: ADMIN_PASSWORD
+- On login, store session in localStorage
+- Logout button in sidebar
+
+### Sidebar navigation (sections):
+1. Profile & Home
+2. About & CV
+3. Certificates
+4. Education
+5. Research Papers
+6. Projects
+7. Extra Curricular & Campus Ambassadors
+8. Hobbies
+9. Blog Posts
+10. Photography
+11. Stories & Updates
+
+### Each section has:
+- A data table showing all existing entries
+- Add New button (opens a form modal)
+- Edit button per row (pre-fills the form)
+- Delete button per row (with confirmation prompt)
+- Save changes reflected immediately on the public site
+
+### Admin Panel — specific fields per section:
+
+**Profile & Home:**
+- Profile picture URL
+- Full name
+- Tagline 1
+- Tagline 2
+- LinkedIn URL
+- GitHub URL
+- Medium URL
+- Email
+- Technologies/Skills (add/remove tags)
+
+**About & CV:**
+- Bio paragraph
+- Oliver Goldsmith quote
+- Bengali quote
+- Google Drive CV link
+- Data Analyst Skills (add/remove bullet points)
+- Data Scientist Skills (add/remove bullet points)
+
+**Certificates:**
+- Title
+- Issuer / Organization
+- Date
+- Category (dropdown: DataCamp, Bohubrihi, GoEdu, 10 Minute School, Interactive Cares, Volunteering, Workshop & Seminar, Other)
+- Type badge (Course / Volunteering / Workshop / Seminar)
+- Credential URL (optional)
+
+**Education:**
+- Degree / Program
+- Institution
+- Start Year
+- End Year (or "Present")
+- CGPA (optional)
+- Description
+
+**Research Papers:**
+- Title
+- Authors
+- Abstract
+- Publication Venue
+- Year
+- Tags (comma-separated)
+- Paper Link / DOI
+
+**Projects:**
+- Title
+- Description
+- Tech Stack (comma-separated tags)
+- Category (Data Analytics / ML AI Research)
+- GitHub URL
+- Live Demo URL (optional)
+- Thumbnail Image URL (optional)
+
+**Campus Ambassadors / Extra Curricular:**
+- Organization name
+- Role
+- Duration (Start – End)
+- Logo/Image URL (optional)
+
+**Hobbies:**
+- Name
+- Emoji icon
+- Description
+
+**Blog Posts:**
+- Title
+- Excerpt
+- Platform (Medium / LinkedIn / Other)
+- External URL
+- Date
+- Cover Image URL (optional)
+
+**Photography:**
+- Image URL
+- Caption (optional)
+- Date (optional)
+
+**Stories & Updates:**
+- Title
+- Date
+- Body text
+- Image URL (optional)
+
+---
+
+## DATABASE SCHEMA
+Create a Neon PostgreSQL database with these tables:
+- profile
+- certificates
+- education
+- research_papers
+- projects
+- campus_ambassadors
+- hobbies
+- blog_posts
+- photos
+- stories
+- skills (for both Data Analyst and Data Scientist skills)
+
+---
+
+## DESIGN REQUIREMENTS
+- Dark or dark-navy theme (professional, modern)
+- Tailwind CSS for all styling
+- Fully mobile responsive
+- Smooth page transitions
+- Clean card-based layouts throughout
+- Consistent font: Inter or Poppins
+- Active nav link highlighting
+- Scroll to top button on long pages
+
+---
+
+## IMPLEMENTATION ORDER
+Build and verify in this order:
+1. Database schema + API routes (Express backend)
+2. Admin Panel login + sidebar layout
+3. Home page
+4. About page (with certificates section)
+5. Education page
+6. Research page
+7. Projects page (with tabs)
+8. Extra Curricular page
+9. Stories & Updates page
+10. Connect all Admin Panel sections to their respective pages
+11. Final mobile responsiveness pass

@@ -5,6 +5,7 @@ import {
   useListResearchPapers,
   useListProjects,
   useListCertificates,
+  useListSkills,
 } from "@workspace/api-client-react";
 
 export default function Home() {
@@ -12,8 +13,10 @@ export default function Home() {
   const { data: papers } = useListResearchPapers();
   const { data: projects } = useListProjects();
   const { data: certificates } = useListCertificates();
+  const { data: skills } = useListSkills();
 
   const recentPapers = papers?.slice(0, 2) || [];
+  const techTags = skills?.filter(s => s.type === 'tech_tag') || [];
 
   return (
     <div className="flex-1 flex flex-col justify-center px-6 md:px-12 py-20 max-w-6xl mx-auto w-full">
@@ -56,6 +59,16 @@ export default function Home() {
             {papers?.length || 0} papers published, {projects?.length || 0} projects, {certificates?.length || 0} certificates
           </p>
         </div>
+
+        {techTags.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-2">
+            {techTags.map(tag => (
+              <span key={tag.id} className="inline-block bg-secondary text-secondary-foreground text-xs font-mono px-2 py-1 rounded border border-border">
+                {tag.name}
+              </span>
+            ))}
+          </div>
+        )}
 
         <div className="flex flex-wrap gap-4 pt-4">
           <Link href="/research" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded hover:bg-primary/90 transition-colors font-medium">

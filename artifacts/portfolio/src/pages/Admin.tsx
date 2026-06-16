@@ -19,6 +19,10 @@ import ProjectsAdmin from "./admin/ProjectsAdmin";
 import BlogPostsAdmin from "./admin/BlogPostsAdmin";
 import HobbiesAdmin from "./admin/HobbiesAdmin";
 import EducationAdmin from "./admin/EducationAdmin";
+import SkillsAdmin from "./admin/SkillsAdmin";
+import CampusAmbassadorsAdmin from "./admin/CampusAmbassadorsAdmin";
+import PhotosAdmin from "./admin/PhotosAdmin";
+import StoriesAdmin from "./admin/StoriesAdmin";
 
 const SECTIONS = [
   { id: "profile", label: "Profile" },
@@ -28,6 +32,10 @@ const SECTIONS = [
   { id: "projects", label: "Projects" },
   { id: "blogposts", label: "Blog Posts" },
   { id: "hobbies", label: "Hobbies" },
+  { id: "skills", label: "Skills" },
+  { id: "campus-ambassadors", label: "Campus Ambassadors" },
+  { id: "photography", label: "Photography" },
+  { id: "stories", label: "Stories" },
 ];
 
 export default function Admin() {
@@ -92,6 +100,10 @@ export default function Admin() {
           {activeSection === "projects" && <ProjectsAdmin />}
           {activeSection === "blogposts" && <BlogPostsAdmin />}
           {activeSection === "hobbies" && <HobbiesAdmin />}
+          {activeSection === "skills" && <SkillsAdmin />}
+          {activeSection === "campus-ambassadors" && <CampusAmbassadorsAdmin />}
+          {activeSection === "photography" && <PhotosAdmin />}
+          {activeSection === "stories" && <StoriesAdmin />}
         </div>
       </main>
     </div>

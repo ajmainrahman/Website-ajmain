@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Api
-  version: 0.2.0
+  version: 0.3.0
   description: Portfolio API specification
 servers:
   - url: /api
@@ -23,6 +23,14 @@ tags:
     description: Hobby operations
   - name: education
     description: Education operations
+  - name: skills
+    description: Skills operations
+  - name: campusAmbassadors
+    description: Campus ambassador operations
+  - name: photos
+    description: Photo operations
+  - name: stories
+    description: Stories operations
   - name: admin
     description: Admin auth operations
 paths:
@@ -551,6 +559,326 @@ paths:
         "404":
           description: Not found
 
+  /skills:
+    get:
+      operationId: listSkills
+      tags: [skills]
+      summary: List skills
+      responses:
+        "200":
+          description: Skills list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Skill"
+    post:
+      operationId: createSkill
+      tags: [skills]
+      summary: Create skill (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+        "401":
+          description: Unauthorized
+
+  /skills/{id}:
+    patch:
+      operationId: updateSkill
+      tags: [skills]
+      summary: Update skill (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Skill"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteSkill
+      tags: [skills]
+      summary: Delete skill (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /campus-ambassadors:
+    get:
+      operationId: listCampusAmbassadors
+      tags: [campusAmbassadors]
+      summary: List campus ambassadors
+      responses:
+        "200":
+          description: Campus ambassadors list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CampusAmbassador"
+    post:
+      operationId: createCampusAmbassador
+      tags: [campusAmbassadors]
+      summary: Create campus ambassador (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CampusAmbassadorInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampusAmbassador"
+        "401":
+          description: Unauthorized
+
+  /campus-ambassadors/{id}:
+    patch:
+      operationId: updateCampusAmbassador
+      tags: [campusAmbassadors]
+      summary: Update campus ambassador (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CampusAmbassadorUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampusAmbassador"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteCampusAmbassador
+      tags: [campusAmbassadors]
+      summary: Delete campus ambassador (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /photos:
+    get:
+      operationId: listPhotos
+      tags: [photos]
+      summary: List photos
+      responses:
+        "200":
+          description: Photos list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Photo"
+    post:
+      operationId: createPhoto
+      tags: [photos]
+      summary: Create photo (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Photo"
+        "401":
+          description: Unauthorized
+
+  /photos/{id}:
+    patch:
+      operationId: updatePhoto
+      tags: [photos]
+      summary: Update photo (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Photo"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deletePhoto
+      tags: [photos]
+      summary: Delete photo (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /stories:
+    get:
+      operationId: listStories
+      tags: [stories]
+      summary: List stories
+      responses:
+        "200":
+          description: Stories list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Story"
+    post:
+      operationId: createStory
+      tags: [stories]
+      summary: Create story (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoryInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "401":
+          description: Unauthorized
+
+  /stories/{id}:
+    patch:
+      operationId: updateStory
+      tags: [stories]
+      summary: Update story (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoryUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteStory
+      tags: [stories]
+      summary: Delete story (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
   /admin/login:
     post:
       operationId: adminLogin
@@ -564,7 +892,7 @@ paths:
               $ref: "#/components/schemas/AdminLoginInput"
       responses:
         "200":
-          description: Login successful
+          description: Logged in
           content:
             application/json:
               schema:
@@ -621,6 +949,12 @@ components:
           type: ["string", "null"]
         cvLink:
           type: ["string", "null"]
+        bio:
+          type: ["string", "null"]
+        quote:
+          type: ["string", "null"]
+        bengaliQuote:
+          type: ["string", "null"]
 
     ProfileInput:
       type: object
@@ -632,6 +966,12 @@ components:
         profilePictureUrl:
           type: ["string", "null"]
         cvLink:
+          type: ["string", "null"]
+        bio:
+          type: ["string", "null"]
+        quote:
+          type: ["string", "null"]
+        bengaliQuote:
           type: ["string", "null"]
 
     Certificate:
@@ -915,6 +1255,148 @@ components:
           type: ["integer", "null"]
         description:
           type: string
+
+    Skill:
+      type: object
+      required: [id, name, type]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+
+    SkillInput:
+      type: object
+      required: [name, type]
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+
+    SkillUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+
+    CampusAmbassador:
+      type: object
+      required: [id, organization, role]
+      properties:
+        id:
+          type: integer
+        organization:
+          type: string
+        role:
+          type: string
+        duration:
+          type: ["string", "null"]
+        logoUrl:
+          type: ["string", "null"]
+
+    CampusAmbassadorInput:
+      type: object
+      required: [organization, role]
+      properties:
+        organization:
+          type: string
+        role:
+          type: string
+        duration:
+          type: ["string", "null"]
+        logoUrl:
+          type: ["string", "null"]
+
+    CampusAmbassadorUpdate:
+      type: object
+      properties:
+        organization:
+          type: string
+        role:
+          type: string
+        duration:
+          type: ["string", "null"]
+        logoUrl:
+          type: ["string", "null"]
+
+    Photo:
+      type: object
+      required: [id, imageUrl]
+      properties:
+        id:
+          type: integer
+        imageUrl:
+          type: string
+        caption:
+          type: ["string", "null"]
+        date:
+          type: ["string", "null"]
+
+    PhotoInput:
+      type: object
+      required: [imageUrl]
+      properties:
+        imageUrl:
+          type: string
+        caption:
+          type: ["string", "null"]
+        date:
+          type: ["string", "null"]
+
+    PhotoUpdate:
+      type: object
+      properties:
+        imageUrl:
+          type: string
+        caption:
+          type: ["string", "null"]
+        date:
+          type: ["string", "null"]
+
+    Story:
+      type: object
+      required: [id, title, date, body]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        date:
+          type: string
+        body:
+          type: string
+        imageUrl:
+          type: ["string", "null"]
+
+    StoryInput:
+      type: object
+      required: [title, date, body]
+      properties:
+        title:
+          type: string
+        date:
+          type: string
+        body:
+          type: string
+        imageUrl:
+          type: ["string", "null"]
+
+    StoryUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        date:
+          type: string
+        body:
+          type: string
+        imageUrl:
+          type: ["string", "null"]
 
     AdminLoginInput:
       type: object

@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.2.0
+ * OpenAPI spec version: 0.3.0
  */
 
 export interface Profile {
@@ -14,4 +14,10 @@ export interface Profile {
   profilePictureUrl?: string | null;
   /** @nullable */
   cvLink?: string | null;
+  /** @nullable */
+  bio?: string | null;
+  /** @nullable */
+  quote?: string | null;
+  /** @nullable */
+  bengaliQuote?: string | null;
 }

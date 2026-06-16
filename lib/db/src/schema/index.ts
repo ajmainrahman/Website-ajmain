@@ -5,3 +5,7 @@ export * from "./projects";
 export * from "./blogposts";
 export * from "./hobbies";
 export * from "./education";
+export * from "./skills";
+export * from "./campus_ambassadors";
+export * from "./photos";
+export * from "./stories";

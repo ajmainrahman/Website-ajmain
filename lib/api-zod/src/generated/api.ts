@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.2.0
+ * OpenAPI spec version: 0.3.0
  */
 import * as zod from "zod";
 
@@ -23,6 +23,9 @@ export const GetProfileResponse = zod.object({
   tagline: zod.string(),
   profilePictureUrl: zod.string().nullish(),
   cvLink: zod.string().nullish(),
+  bio: zod.string().nullish(),
+  quote: zod.string().nullish(),
+  bengaliQuote: zod.string().nullish(),
 });
 
 /**
@@ -33,6 +36,9 @@ export const UpdateProfileBody = zod.object({
   tagline: zod.string().optional(),
   profilePictureUrl: zod.string().nullish(),
   cvLink: zod.string().nullish(),
+  bio: zod.string().nullish(),
+  quote: zod.string().nullish(),
+  bengaliQuote: zod.string().nullish(),
 });
 
 export const UpdateProfileResponse = zod.object({
@@ -41,6 +47,9 @@ export const UpdateProfileResponse = zod.object({
   tagline: zod.string(),
   profilePictureUrl: zod.string().nullish(),
   cvLink: zod.string().nullish(),
+  bio: zod.string().nullish(),
+  quote: zod.string().nullish(),
+  bengaliQuote: zod.string().nullish(),
 });
 
 /**
@@ -376,6 +385,200 @@ export const UpdateEducationResponse = zod.object({
  * @summary Delete education entry (admin only)
  */
 export const DeleteEducationParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary List skills
+ */
+export const ListSkillsResponseItem = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  type: zod.string(),
+});
+export const ListSkillsResponse = zod.array(ListSkillsResponseItem);
+
+/**
+ * @summary Create skill (admin only)
+ */
+export const CreateSkillBody = zod.object({
+  name: zod.string(),
+  type: zod.string(),
+});
+
+/**
+ * @summary Update skill (admin only)
+ */
+export const UpdateSkillParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateSkillBody = zod.object({
+  name: zod.string().optional(),
+  type: zod.string().optional(),
+});
+
+export const UpdateSkillResponse = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  type: zod.string(),
+});
+
+/**
+ * @summary Delete skill (admin only)
+ */
+export const DeleteSkillParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary List campus ambassadors
+ */
+export const ListCampusAmbassadorsResponseItem = zod.object({
+  id: zod.number(),
+  organization: zod.string(),
+  role: zod.string(),
+  duration: zod.string().nullish(),
+  logoUrl: zod.string().nullish(),
+});
+export const ListCampusAmbassadorsResponse = zod.array(
+  ListCampusAmbassadorsResponseItem,
+);
+
+/**
+ * @summary Create campus ambassador (admin only)
+ */
+export const CreateCampusAmbassadorBody = zod.object({
+  organization: zod.string(),
+  role: zod.string(),
+  duration: zod.string().nullish(),
+  logoUrl: zod.string().nullish(),
+});
+
+/**
+ * @summary Update campus ambassador (admin only)
+ */
+export const UpdateCampusAmbassadorParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateCampusAmbassadorBody = zod.object({
+  organization: zod.string().optional(),
+  role: zod.string().optional(),
+  duration: zod.string().nullish(),
+  logoUrl: zod.string().nullish(),
+});
+
+export const UpdateCampusAmbassadorResponse = zod.object({
+  id: zod.number(),
+  organization: zod.string(),
+  role: zod.string(),
+  duration: zod.string().nullish(),
+  logoUrl: zod.string().nullish(),
+});
+
+/**
+ * @summary Delete campus ambassador (admin only)
+ */
+export const DeleteCampusAmbassadorParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary List photos
+ */
+export const ListPhotosResponseItem = zod.object({
+  id: zod.number(),
+  imageUrl: zod.string(),
+  caption: zod.string().nullish(),
+  date: zod.string().nullish(),
+});
+export const ListPhotosResponse = zod.array(ListPhotosResponseItem);
+
+/**
+ * @summary Create photo (admin only)
+ */
+export const CreatePhotoBody = zod.object({
+  imageUrl: zod.string(),
+  caption: zod.string().nullish(),
+  date: zod.string().nullish(),
+});
+
+/**
+ * @summary Update photo (admin only)
+ */
+export const UpdatePhotoParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdatePhotoBody = zod.object({
+  imageUrl: zod.string().optional(),
+  caption: zod.string().nullish(),
+  date: zod.string().nullish(),
+});
+
+export const UpdatePhotoResponse = zod.object({
+  id: zod.number(),
+  imageUrl: zod.string(),
+  caption: zod.string().nullish(),
+  date: zod.string().nullish(),
+});
+
+/**
+ * @summary Delete photo (admin only)
+ */
+export const DeletePhotoParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary List stories
+ */
+export const ListStoriesResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  date: zod.string(),
+  body: zod.string(),
+  imageUrl: zod.string().nullish(),
+});
+export const ListStoriesResponse = zod.array(ListStoriesResponseItem);
+
+/**
+ * @summary Create story (admin only)
+ */
+export const CreateStoryBody = zod.object({
+  title: zod.string(),
+  date: zod.string(),
+  body: zod.string(),
+  imageUrl: zod.string().nullish(),
+});
+
+/**
+ * @summary Update story (admin only)
+ */
+export const UpdateStoryParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateStoryBody = zod.object({
+  title: zod.string().optional(),
+  date: zod.string().optional(),
+  body: zod.string().optional(),
+  imageUrl: zod.string().nullish(),
+});
+
+export const UpdateStoryResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  date: zod.string(),
+  body: zod.string(),
+  imageUrl: zod.string().nullish(),
+});
+
+/**
+ * @summary Delete story (admin only)
+ */
+export const DeleteStoryParams = zod.object({
   id: zod.coerce.number(),
 });
 

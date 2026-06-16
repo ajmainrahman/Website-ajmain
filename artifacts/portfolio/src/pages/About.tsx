@@ -1,19 +1,13 @@
 import { useState, useMemo } from "react";
 import { Download, ExternalLink } from "lucide-react";
-import { useGetProfile, useListCertificates } from "@workspace/api-client-react";
+import { useGetProfile, useListCertificates, useListSkills } from "@workspace/api-client-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-const stack = {
-  "Languages": ["Python Programming", "C", "MySQL", "PostgreSQL", "DAX"],
-  "ML/Stats": ["Statistics & Hypothesis Testing", "Supervised Learning", "Unsupervised Learning", "Feature Engineering", "Predictive Modeling"],
-  "Data & DB": ["Data Wrangling & Cleaning", "Database Design", "MySQL", "PostgreSQL", "EDA"],
-  "Visualization": ["Matplotlib", "Seaborn", "PowerBI"]
-};
 
 export default function About() {
   const { data: profile } = useGetProfile();
   const { data: certificates } = useListCertificates();
+  const { data: skills } = useListSkills();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedIssuer, setSelectedIssuer] = useState<string>("all");
@@ -37,6 +31,9 @@ export default function About() {
     });
   }, [certificates, selectedCategory, selectedIssuer]);
 
+  const dataAnalystSkills = skills?.filter(s => s.type === "data_analyst") || [];
+  const dataScientistSkills = skills?.filter(s => s.type === "data_scientist") || [];
+
   return (
     <div className="px-6 md:px-12 py-20 max-w-5xl mx-auto w-full space-y-16">
       <header className="space-y-4 border-b border-border pb-8">
@@ -45,12 +42,21 @@ export default function About() {
       </header>
 
       <section className="prose prose-lg dark:prose-invert max-w-none">
-        <p>
-          I am a driven AI/ML researcher and data practitioner focused on deriving meaningful insights from complex datasets. My work bridges the gap between rigorous academic research and practical, scalable data products.
+        <p className="font-serif leading-relaxed">
+          {profile?.bio || "Bio coming soon — add it via the Admin Panel."}
         </p>
-        <p>
-          With a strong foundation in Python and SQL, I specialize in predictive modeling, statistical analysis, and end-to-end data pipelines. I am constantly expanding my toolkit, exploring new algorithms, and refining my ability to communicate data-driven narratives.
-        </p>
+
+        {profile?.quote && (
+          <blockquote className="mt-8 border-l-4 border-accent pl-6 py-2 text-2xl font-serif italic text-muted-foreground">
+            "{profile.quote}"
+            {profile.bengaliQuote && (
+              <p className="mt-4 text-base font-serif italic text-muted-foreground/70">
+                {profile.bengaliQuote}
+              </p>
+            )}
+          </blockquote>
+        )}
+
         <div className="mt-8">
           <Tooltip>
             <TooltipTrigger asChild>
@@ -79,21 +85,38 @@ export default function About() {
         </div>
       </section>
 
-      <section className="space-y-8">
-        <h2 className="text-2xl font-serif font-bold">Key Technologies</h2>
+      <section className="space-y-8 pt-8 border-t border-border">
+        <h2 className="text-2xl font-serif font-bold">Technical Skills</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {Object.entries(stack).map(([category, skills]) => (
-            <div key={category} className="bg-card border border-border p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-4 text-accent">{category}</h3>
+          <div className="bg-card border border-border p-6 rounded-lg">
+            <h3 className="text-lg font-bold mb-4 text-accent">Data Analyst Skills</h3>
+            {dataAnalystSkills.length > 0 ? (
               <ul className="space-y-2">
-                {skills.map((skill) => (
-                  <li key={skill} className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <span className="w-1.5 h-1.5 bg-accent/50 rounded-full" /> {skill}
+                {dataAnalystSkills.map((skill) => (
+                  <li key={skill.id} className="flex items-center gap-2 text-muted-foreground text-sm">
+                    <span className="w-1.5 h-1.5 bg-accent/50 rounded-full" /> {skill.name}
                   </li>
                 ))}
               </ul>
-            </div>
-          ))}
+            ) : (
+              <p className="text-sm text-muted-foreground italic">No data analyst skills added.</p>
+            )}
+          </div>
+          
+          <div className="bg-card border border-border p-6 rounded-lg">
+            <h3 className="text-lg font-bold mb-4 text-accent">Data Scientist Skills</h3>
+            {dataScientistSkills.length > 0 ? (
+              <ul className="space-y-2">
+                {dataScientistSkills.map((skill) => (
+                  <li key={skill.id} className="flex items-center gap-2 text-muted-foreground text-sm">
+                    <span className="w-1.5 h-1.5 bg-accent/50 rounded-full" /> {skill.name}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground italic">No data scientist skills added.</p>
+            )}
+          </div>
         </div>
       </section>
 

@@ -8,6 +8,9 @@ export const profileTable = pgTable("profile", {
   tagline: text("tagline").notNull().default("Building AI that understands both data and people."),
   profilePictureUrl: text("profile_picture_url"),
   cvLink: text("cv_link"),
+  bio: text("bio"),
+  quote: text("quote"),
+  bengaliQuote: text("bengali_quote"),
 });
 
 export const insertProfileSchema = createInsertSchema(profileTable).omit({ id: true });

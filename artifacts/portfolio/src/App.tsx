@@ -12,6 +12,7 @@ import Research from "@/pages/Research";
 import Projects from "@/pages/Projects";
 import ECA from "@/pages/ECA";
 import Hobbies from "@/pages/Hobbies";
+import Stories from "@/pages/Stories";
 import Contact from "@/pages/Contact";
 import Admin from "@/pages/Admin";
 
@@ -38,6 +39,7 @@ function Router() {
             <Route path="/projects" component={Projects} />
             <Route path="/eca" component={ECA} />
             <Route path="/hobbies" component={Hobbies} />
+            <Route path="/stories" component={Stories} />
             <Route path="/contact" component={Contact} />
             <Route component={NotFound} />
           </Switch>

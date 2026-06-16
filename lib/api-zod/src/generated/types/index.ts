@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.2.0
+ * OpenAPI spec version: 0.3.0
  */
 
 export * from "./adminAuth";
@@ -12,6 +12,9 @@ export * from "./adminSession";
 export * from "./blogPost";
 export * from "./blogPostInput";
 export * from "./blogPostUpdate";
+export * from "./campusAmbassador";
+export * from "./campusAmbassadorInput";
+export * from "./campusAmbassadorUpdate";
 export * from "./certificate";
 export * from "./certificateInput";
 export * from "./certificateUpdate";
@@ -22,6 +25,9 @@ export * from "./healthStatus";
 export * from "./hobby";
 export * from "./hobbyInput";
 export * from "./hobbyUpdate";
+export * from "./photo";
+export * from "./photoInput";
+export * from "./photoUpdate";
 export * from "./profile";
 export * from "./profileInput";
 export * from "./project";
@@ -30,3 +36,9 @@ export * from "./projectUpdate";
 export * from "./researchPaper";
 export * from "./researchPaperInput";
 export * from "./researchPaperUpdate";
+export * from "./skill";
+export * from "./skillInput";
+export * from "./skillUpdate";
+export * from "./story";
+export * from "./storyInput";
+export * from "./storyUpdate";

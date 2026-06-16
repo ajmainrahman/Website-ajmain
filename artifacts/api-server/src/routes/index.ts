@@ -8,6 +8,10 @@ import projectsRouter from "./projects";
 import blogpostsRouter from "./blogposts";
 import hobbiesRouter from "./hobbies";
 import educationRouter from "./education";
+import skillsRouter from "./skills";
+import campusAmbassadorsRouter from "./campus_ambassadors";
+import photosRouter from "./photos";
+import storiesRouter from "./stories";
 
 const router: IRouter = Router();
 
@@ -20,5 +24,9 @@ router.use(projectsRouter);
 router.use(blogpostsRouter);
 router.use(hobbiesRouter);
 router.use(educationRouter);
+router.use(skillsRouter);
+router.use(campusAmbassadorsRouter);
+router.use(photosRouter);
+router.use(storiesRouter);
 
 export default router;

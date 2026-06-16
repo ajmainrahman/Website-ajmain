@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.2.0
+ * OpenAPI spec version: 0.3.0
  */
 export interface HealthStatus {
   status: string;
@@ -17,6 +17,12 @@ export interface Profile {
   profilePictureUrl?: string | null;
   /** @nullable */
   cvLink?: string | null;
+  /** @nullable */
+  bio?: string | null;
+  /** @nullable */
+  quote?: string | null;
+  /** @nullable */
+  bengaliQuote?: string | null;
 }
 
 export interface ProfileInput {
@@ -26,6 +32,12 @@ export interface ProfileInput {
   profilePictureUrl?: string | null;
   /** @nullable */
   cvLink?: string | null;
+  /** @nullable */
+  bio?: string | null;
+  /** @nullable */
+  quote?: string | null;
+  /** @nullable */
+  bengaliQuote?: string | null;
 }
 
 export interface Certificate {
@@ -197,6 +209,100 @@ export interface EducationUpdate {
   /** @nullable */
   endYear?: number | null;
   description?: string;
+}
+
+export interface Skill {
+  id: number;
+  name: string;
+  type: string;
+}
+
+export interface SkillInput {
+  name: string;
+  type: string;
+}
+
+export interface SkillUpdate {
+  name?: string;
+  type?: string;
+}
+
+export interface CampusAmbassador {
+  id: number;
+  organization: string;
+  role: string;
+  /** @nullable */
+  duration?: string | null;
+  /** @nullable */
+  logoUrl?: string | null;
+}
+
+export interface CampusAmbassadorInput {
+  organization: string;
+  role: string;
+  /** @nullable */
+  duration?: string | null;
+  /** @nullable */
+  logoUrl?: string | null;
+}
+
+export interface CampusAmbassadorUpdate {
+  organization?: string;
+  role?: string;
+  /** @nullable */
+  duration?: string | null;
+  /** @nullable */
+  logoUrl?: string | null;
+}
+
+export interface Photo {
+  id: number;
+  imageUrl: string;
+  /** @nullable */
+  caption?: string | null;
+  /** @nullable */
+  date?: string | null;
+}
+
+export interface PhotoInput {
+  imageUrl: string;
+  /** @nullable */
+  caption?: string | null;
+  /** @nullable */
+  date?: string | null;
+}
+
+export interface PhotoUpdate {
+  imageUrl?: string;
+  /** @nullable */
+  caption?: string | null;
+  /** @nullable */
+  date?: string | null;
+}
+
+export interface Story {
+  id: number;
+  title: string;
+  date: string;
+  body: string;
+  /** @nullable */
+  imageUrl?: string | null;
+}
+
+export interface StoryInput {
+  title: string;
+  date: string;
+  body: string;
+  /** @nullable */
+  imageUrl?: string | null;
+}
+
+export interface StoryUpdate {
+  title?: string;
+  date?: string;
+  body?: string;
+  /** @nullable */
+  imageUrl?: string | null;
 }
 
 export interface AdminLoginInput {

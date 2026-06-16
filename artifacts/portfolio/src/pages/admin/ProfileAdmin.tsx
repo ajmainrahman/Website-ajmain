@@ -24,6 +24,9 @@ const profileSchema = z.object({
   tagline: z.string().min(1, "Tagline is required"),
   profilePictureUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
   cvLink: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+  bio: z.string().optional().or(z.literal("")),
+  quote: z.string().optional().or(z.literal("")),
+  bengaliQuote: z.string().optional().or(z.literal("")),
 });
 
 export default function ProfileAdmin() {
@@ -39,6 +42,9 @@ export default function ProfileAdmin() {
       tagline: "",
       profilePictureUrl: "",
       cvLink: "",
+      bio: "",
+      quote: "",
+      bengaliQuote: "",
     },
   });
 
@@ -49,6 +55,9 @@ export default function ProfileAdmin() {
         tagline: profile.tagline || "",
         profilePictureUrl: profile.profilePictureUrl || "",
         cvLink: profile.cvLink || "",
+        bio: profile.bio || "",
+        quote: profile.quote || "",
+        bengaliQuote: profile.bengaliQuote || "",
       });
     }
   }, [profile, form]);
@@ -61,6 +70,9 @@ export default function ProfileAdmin() {
           tagline: values.tagline,
           profilePictureUrl: values.profilePictureUrl || null,
           cvLink: values.cvLink || null,
+          bio: values.bio || null,
+          quote: values.quote || null,
+          bengaliQuote: values.bengaliQuote || null,
         },
       },
       {
@@ -106,7 +118,46 @@ export default function ProfileAdmin() {
               <FormItem>
                 <FormLabel>Tagline</FormLabel>
                 <FormControl>
-                  <Textarea {...field} rows={3} />
+                  <Textarea {...field} rows={2} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="bio"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bio</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={4} placeholder="Full professional biography..." />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="quote"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Favorite Quote</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={2} placeholder="A quote that inspires you..." />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="bengaliQuote"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bengali Quote (Optional translation or secondary quote)</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={2} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
