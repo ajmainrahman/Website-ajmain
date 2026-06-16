@@ -1,72 +1,130 @@
-import { ArrowUpRight, BookOpen } from "lucide-react";
-
-const publications = [
-  {
-    title: "Benchmark Diagnostic MRI and Medical Imaging Dataset",
-    venue: "[Placeholder] Journal of Medical Imaging",
-    year: "2024",
-    abstract: "[Placeholder] This paper introduces a comprehensive, annotated dataset of MRI scans aimed at improving the training of diagnostic deep learning models. We detail the collection methodology, annotation process, and baseline model performance."
-  },
-  {
-    title: "A Deep Learning Approach to Detect and Classification of Lung Cancer",
-    venue: "[Placeholder] International Conference on Health Informatics",
-    year: "2023",
-    abstract: "[Placeholder] We propose a novel convolutional neural network architecture for the early detection and classification of lung cancer nodules from CT scans, achieving state-of-the-art sensitivity on standard benchmarks."
-  },
-  {
-    title: "Team Error Point at BLP-2023 Task 1: A Comprehensive Approach for Violence Inciting Text Detection using Deep Learning and Traditional Machine Learning Algorithm",
-    venue: "Workshop on Bangla Language Processing (BLP-2023)",
-    year: "2023",
-    abstract: "[Placeholder] We describe our system for detecting violence-inciting text in Bangla. We compared traditional machine learning models with deep learning approaches, finding that an ensemble method yielded the best results for this specific NLP task."
-  },
-  {
-    title: "Survey-based Machine learning approaches to diagnosis of hair fall disorder in Bangladeshi Community",
-    venue: "[Placeholder] Journal of Computational Health",
-    year: "2022",
-    abstract: "[Placeholder] Utilizing a large-scale survey from the Bangladeshi community, we applied various machine learning techniques to identify key predictive factors for hair fall disorders, providing a data-driven foundation for dermatological diagnosis."
-  },
-  {
-    title: "Enhancing Sentiment Analysis using Machine Learning Predictive Models to Analyze Social Media Reviews on Junk Food",
-    venue: "[Placeholder] Symposium on Applied Data Science",
-    year: "2022",
-    abstract: "[Placeholder] This study explores public perception of junk food brands by applying advanced sentiment analysis models to social media data, highlighting correlations between specific marketing campaigns and consumer sentiment shifts."
-  }
-];
+import { useState, useMemo } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { useListResearchPapers } from "@workspace/api-client-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 export default function Research() {
+  const { data: papers } = useListResearchPapers();
+  const [selectedYear, setSelectedYear] = useState<string>("all");
+  const [tagSearch, setTagSearch] = useState("");
+
+  const years = useMemo(() => {
+    if (!papers) return [];
+    const uniqueYears = Array.from(new Set(papers.map(p => p.year))).sort((a, b) => b - a);
+    return uniqueYears;
+  }, [papers]);
+
+  const filteredPapers = useMemo(() => {
+    if (!papers) return [];
+    let filtered = [...papers].sort((a, b) => b.year - a.year);
+    
+    if (selectedYear !== "all") {
+      filtered = filtered.filter(p => p.year.toString() === selectedYear);
+    }
+    
+    if (tagSearch.trim()) {
+      const searchLower = tagSearch.toLowerCase().trim();
+      filtered = filtered.filter(p => 
+        p.tags.toLowerCase().includes(searchLower) || 
+        p.title.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    return filtered;
+  }, [papers, selectedYear, tagSearch]);
+
   return (
     <div className="px-6 md:px-12 py-20 max-w-5xl mx-auto w-full space-y-16">
       <header className="space-y-4 border-b border-border pb-8">
-        <h1 className="text-4xl md:text-5xl font-serif font-bold">Research & Publications</h1>
-        <p className="text-xl text-muted-foreground font-serif italic">Academic contributions and peer-reviewed work.</p>
+        <div className="flex items-end justify-between">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-serif font-bold">Research & Publications</h1>
+            <p className="text-xl text-muted-foreground font-serif italic mt-4">Academic contributions and peer-reviewed work.</p>
+          </div>
+          {papers && <div className="text-sm font-mono bg-secondary px-3 py-1 rounded text-muted-foreground">{papers.length} Papers</div>}
+        </div>
       </header>
 
-      <div className="bg-secondary/50 border border-border p-4 rounded-md mb-8 inline-flex items-center gap-2">
-        <BookOpen size={16} className="text-muted-foreground" />
-        <p className="text-sm text-muted-foreground m-0">Note: Venues, years, and abstracts are placeholders to be updated by the owner.</p>
-      </div>
+      {papers && papers.length > 0 && (
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="w-full sm:w-48">
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger>
+                <SelectValue placeholder="Filter by Year" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Years</SelectItem>
+                {years.map(y => (
+                  <SelectItem key={y} value={y.toString()}>{y}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex-1">
+            <Input 
+              placeholder="Search by tag or title..." 
+              value={tagSearch}
+              onChange={(e) => setTagSearch(e.target.value)}
+            />
+          </div>
+        </div>
+      )}
 
       <div className="space-y-12">
-        {publications.map((paper, index) => (
-          <article key={index} className="group relative pl-8 border-l-2 border-border hover:border-accent transition-colors">
-            <div className="absolute w-3 h-3 bg-background border-2 border-border group-hover:border-accent rounded-full -left-[7px] top-2 transition-colors" />
-            
-            <div className="flex items-center gap-4 mb-2">
-              <span className="font-mono text-sm text-accent font-medium">{paper.year}</span>
-              <span className="text-sm text-muted-foreground">{paper.venue}</span>
-            </div>
-            
-            <h2 className="text-2xl font-serif font-bold mb-4 leading-tight">{paper.title}</h2>
-            
-            <p className="text-muted-foreground leading-relaxed mb-4 max-w-3xl">
-              {paper.abstract}
-            </p>
-            
-            <a href="#" className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent transition-colors">
-              Read Paper <ArrowUpRight size={14} />
-            </a>
-          </article>
-        ))}
+        {filteredPapers.length > 0 ? (
+          filteredPapers.map((paper) => (
+            <article key={paper.id} className="group relative pl-8 border-l-2 border-border hover:border-accent transition-colors">
+              <div className="absolute w-3 h-3 bg-background border-2 border-border group-hover:border-accent rounded-full -left-[7px] top-2 transition-colors" />
+              
+              <div className="flex items-center gap-4 mb-2">
+                <span className="font-mono text-sm text-accent font-medium">{paper.year}</span>
+                <span className="text-sm text-muted-foreground">{paper.venue}</span>
+              </div>
+              
+              <h2 className="text-2xl font-serif font-bold mb-3 leading-tight">{paper.title}</h2>
+              <p className="text-sm text-muted-foreground font-medium mb-4 italic">{paper.authors}</p>
+              
+              <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
+                {paper.abstract}
+              </p>
+              
+              <div className="flex flex-wrap gap-2 mb-6">
+                {paper.tags.split(',').map((tag) => tag.trim()).filter(Boolean).map((tag, idx) => (
+                  <span key={idx} className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-xs font-mono">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a 
+                    href={paper.paperLink || "#"} 
+                    target={paper.paperLink ? "_blank" : undefined}
+                    rel={paper.paperLink ? "noreferrer" : undefined}
+                    className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
+                      paper.paperLink ? "text-foreground hover:text-accent" : "text-muted-foreground cursor-not-allowed opacity-50"
+                    }`}
+                    onClick={(e) => {
+                      if (!paper.paperLink) e.preventDefault();
+                    }}
+                  >
+                    Read Paper <ArrowUpRight size={14} />
+                  </a>
+                </TooltipTrigger>
+                {!paper.paperLink && (
+                  <TooltipContent>
+                    <p>Link not yet configured</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </article>
+          ))
+        ) : (
+          <p className="text-muted-foreground italic">No publications match your criteria.</p>
+        )}
       </div>
     </div>
   );

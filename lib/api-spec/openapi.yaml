@@ -1,22 +1,36 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
-  version: 0.1.0
-  description: API specification
+  version: 0.2.0
+  description: Portfolio API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: profile
+    description: Profile operations
+  - name: certificates
+    description: Certificate operations
+  - name: research
+    description: Research paper operations
+  - name: projects
+    description: Project operations
+  - name: blogposts
+    description: Blog post operations
+  - name: hobbies
+    description: Hobby operations
+  - name: education
+    description: Education operations
+  - name: admin
+    description: Admin auth operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +38,901 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get profile
+      responses:
+        "200":
+          description: Profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+    patch:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Update profile (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileInput"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "401":
+          description: Unauthorized
+
+  /certificates:
+    get:
+      operationId: listCertificates
+      tags: [certificates]
+      summary: List certificates
+      responses:
+        "200":
+          description: Certificates list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Certificate"
+    post:
+      operationId: createCertificate
+      tags: [certificates]
+      summary: Create certificate (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CertificateInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certificate"
+        "401":
+          description: Unauthorized
+
+  /certificates/{id}:
+    patch:
+      operationId: updateCertificate
+      tags: [certificates]
+      summary: Update certificate (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CertificateUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certificate"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteCertificate
+      tags: [certificates]
+      summary: Delete certificate (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /research:
+    get:
+      operationId: listResearchPapers
+      tags: [research]
+      summary: List research papers
+      responses:
+        "200":
+          description: Research papers list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResearchPaper"
+    post:
+      operationId: createResearchPaper
+      tags: [research]
+      summary: Create research paper (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResearchPaperInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResearchPaper"
+        "401":
+          description: Unauthorized
+
+  /research/{id}:
+    patch:
+      operationId: updateResearchPaper
+      tags: [research]
+      summary: Update research paper (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResearchPaperUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResearchPaper"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteResearchPaper
+      tags: [research]
+      summary: Delete research paper (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /projects:
+    get:
+      operationId: listProjects
+      tags: [projects]
+      summary: List projects
+      responses:
+        "200":
+          description: Projects list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+    post:
+      operationId: createProject
+      tags: [projects]
+      summary: Create project (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "401":
+          description: Unauthorized
+
+  /projects/{id}:
+    patch:
+      operationId: updateProject
+      tags: [projects]
+      summary: Update project (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteProject
+      tags: [projects]
+      summary: Delete project (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /blog-posts:
+    get:
+      operationId: listBlogPosts
+      tags: [blogposts]
+      summary: List blog posts
+      responses:
+        "200":
+          description: Blog posts list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPost"
+    post:
+      operationId: createBlogPost
+      tags: [blogposts]
+      summary: Create blog post (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPostInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "401":
+          description: Unauthorized
+
+  /blog-posts/{id}:
+    patch:
+      operationId: updateBlogPost
+      tags: [blogposts]
+      summary: Update blog post (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPostUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteBlogPost
+      tags: [blogposts]
+      summary: Delete blog post (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /hobbies:
+    get:
+      operationId: listHobbies
+      tags: [hobbies]
+      summary: List hobbies
+      responses:
+        "200":
+          description: Hobbies list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Hobby"
+    post:
+      operationId: createHobby
+      tags: [hobbies]
+      summary: Create hobby (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HobbyInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hobby"
+        "401":
+          description: Unauthorized
+
+  /hobbies/{id}:
+    patch:
+      operationId: updateHobby
+      tags: [hobbies]
+      summary: Update hobby (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HobbyUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hobby"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteHobby
+      tags: [hobbies]
+      summary: Delete hobby (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /education:
+    get:
+      operationId: listEducation
+      tags: [education]
+      summary: List education entries
+      responses:
+        "200":
+          description: Education list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Education"
+    post:
+      operationId: createEducation
+      tags: [education]
+      summary: Create education entry (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EducationInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Education"
+        "401":
+          description: Unauthorized
+
+  /education/{id}:
+    patch:
+      operationId: updateEducation
+      tags: [education]
+      summary: Update education entry (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EducationUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Education"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteEducation
+      tags: [education]
+      summary: Delete education entry (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  /admin/login:
+    post:
+      operationId: adminLogin
+      tags: [admin]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminLoginInput"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSession"
+        "401":
+          description: Invalid password
+
+  /admin/logout:
+    post:
+      operationId: adminLogout
+      tags: [admin]
+      summary: Admin logout
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSession"
+
+  /admin/me:
+    get:
+      operationId: adminMe
+      tags: [admin]
+      summary: Check admin auth status
+      responses:
+        "200":
+          description: Auth status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminAuth"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    Profile:
+      type: object
+      required: [id, name, tagline]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        tagline:
+          type: string
+        profilePictureUrl:
+          type: ["string", "null"]
+        cvLink:
+          type: ["string", "null"]
+
+    ProfileInput:
+      type: object
+      properties:
+        name:
+          type: string
+        tagline:
+          type: string
+        profilePictureUrl:
+          type: ["string", "null"]
+        cvLink:
+          type: ["string", "null"]
+
+    Certificate:
+      type: object
+      required: [id, title, issuer, date, category]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        issuer:
+          type: string
+        date:
+          type: string
+        category:
+          type: string
+        credentialUrl:
+          type: ["string", "null"]
+
+    CertificateInput:
+      type: object
+      required: [title, issuer, date, category]
+      properties:
+        title:
+          type: string
+        issuer:
+          type: string
+        date:
+          type: string
+        category:
+          type: string
+        credentialUrl:
+          type: ["string", "null"]
+
+    CertificateUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        issuer:
+          type: string
+        date:
+          type: string
+        category:
+          type: string
+        credentialUrl:
+          type: ["string", "null"]
+
+    ResearchPaper:
+      type: object
+      required: [id, title, authors, abstract, venue, year, tags]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        authors:
+          type: string
+        abstract:
+          type: string
+        venue:
+          type: string
+        year:
+          type: integer
+        paperLink:
+          type: ["string", "null"]
+        tags:
+          type: string
+
+    ResearchPaperInput:
+      type: object
+      required: [title, authors, abstract, venue, year, tags]
+      properties:
+        title:
+          type: string
+        authors:
+          type: string
+        abstract:
+          type: string
+        venue:
+          type: string
+        year:
+          type: integer
+        paperLink:
+          type: ["string", "null"]
+        tags:
+          type: string
+
+    ResearchPaperUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        authors:
+          type: string
+        abstract:
+          type: string
+        venue:
+          type: string
+        year:
+          type: integer
+        paperLink:
+          type: ["string", "null"]
+        tags:
+          type: string
+
+    Project:
+      type: object
+      required: [id, title, description, techStack, githubUrl, category]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        techStack:
+          type: string
+        githubUrl:
+          type: string
+        liveDemoUrl:
+          type: ["string", "null"]
+        category:
+          type: string
+
+    ProjectInput:
+      type: object
+      required: [title, description, techStack, githubUrl, category]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        techStack:
+          type: string
+        githubUrl:
+          type: string
+        liveDemoUrl:
+          type: ["string", "null"]
+        category:
+          type: string
+
+    ProjectUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        techStack:
+          type: string
+        githubUrl:
+          type: string
+        liveDemoUrl:
+          type: ["string", "null"]
+        category:
+          type: string
+
+    BlogPost:
+      type: object
+      required: [id, title, excerpt, externalUrl, date]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        excerpt:
+          type: string
+        externalUrl:
+          type: string
+        date:
+          type: string
+        coverImageUrl:
+          type: ["string", "null"]
+
+    BlogPostInput:
+      type: object
+      required: [title, excerpt, externalUrl, date]
+      properties:
+        title:
+          type: string
+        excerpt:
+          type: string
+        externalUrl:
+          type: string
+        date:
+          type: string
+        coverImageUrl:
+          type: ["string", "null"]
+
+    BlogPostUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        excerpt:
+          type: string
+        externalUrl:
+          type: string
+        date:
+          type: string
+        coverImageUrl:
+          type: ["string", "null"]
+
+    Hobby:
+      type: object
+      required: [id, name, description]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        icon:
+          type: ["string", "null"]
+
+    HobbyInput:
+      type: object
+      required: [name, description]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        icon:
+          type: ["string", "null"]
+
+    HobbyUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        icon:
+          type: ["string", "null"]
+
+    Education:
+      type: object
+      required: [id, degree, institution, startYear, description]
+      properties:
+        id:
+          type: integer
+        degree:
+          type: string
+        institution:
+          type: string
+        startYear:
+          type: integer
+        endYear:
+          type: ["integer", "null"]
+        description:
+          type: string
+
+    EducationInput:
+      type: object
+      required: [degree, institution, startYear, description]
+      properties:
+        degree:
+          type: string
+        institution:
+          type: string
+        startYear:
+          type: integer
+        endYear:
+          type: ["integer", "null"]
+        description:
+          type: string
+
+    EducationUpdate:
+      type: object
+      properties:
+        degree:
+          type: string
+        institution:
+          type: string
+        startYear:
+          type: integer
+        endYear:
+          type: ["integer", "null"]
+        description:
+          type: string
+
+    AdminLoginInput:
+      type: object
+      required: [password]
+      properties:
+        password:
+          type: string
+
+    AdminSession:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+
+    AdminAuth:
+      type: object
+      required: [authenticated]
+      properties:
+        authenticated:
+          type: boolean

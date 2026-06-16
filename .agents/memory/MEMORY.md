@@ -1,0 +1,1 @@
+- [Portfolio architecture](portfolio-architecture.md) — full-stack portfolio with React/Vite frontend, Express API, PostgreSQL+Drizzle, session auth for admin

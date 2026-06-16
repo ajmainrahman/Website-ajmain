@@ -1,0 +1,89 @@
+This is my personal portfolio website. I need multiple changes across several pages and a full Admin Panel. Here are all the requirements:
+
+## 1. HOME PAGE
+- Add a circular profile picture placeholder (LinkedIn-style round avatar) near the hero/intro section.
+- The placeholder should show a default silhouette icon if no image is set.
+- In the Admin Panel, allow uploading or linking a profile picture URL that replaces this placeholder.
+
+---
+
+## 2. ABOUT PAGE
+
+### a) Download CV — Fix & Google Drive Integration
+- The "Download CV" button is currently broken. Fix it.
+- Instead of storing the CV file locally, use a Google Drive shareable link.
+- In the Admin Panel, add a field where I can paste my Google Drive CV link. The button should use that link to trigger a download or open in a new tab.
+- Use the Google Drive direct download URL format: https://drive.google.com/uc?export=download&id=FILE_ID
+
+### b) Certificates Section
+- After the "Technologies/Skills" section, add a new "Certificates" section.
+- This section must support 40+ certificates displayed in a clean grid or card layout.
+- Each certificate card should show: Certificate Name, Issuing Organization, Date, and optionally a credential link.
+- Add filtering by issuing organization or category (e.g., DataCamp, Coursera, Google).
+- In the Admin Panel, allow adding, editing, and removing certificates with these fields: Title, Issuer, Date, Category, Credential URL (optional).
+
+---
+
+## 3. RESEARCH PAGE
+- In the Admin Panel, add a "Create New Research Paper" form with these fields:
+  - Title
+  - Authors (comma-separated)
+  - Abstract
+  - Publication Venue (Journal/Conference name)
+  - Year
+  - Paper Link / DOI (optional)
+  - Tags/Keywords
+- The research page should display all added papers in a clean academic card format, sorted by year (newest first).
+- Add filtering by year and tag/keyword.
+
+---
+
+## 4. PROJECTS PAGE
+- Split projects into two distinct categories with separate tabs or sections:
+  1. **Applied Data Products** — for data analysis, dashboards, visualization projects
+  2. **ML/AI Research** — for machine learning, deep learning, NLP, computer vision projects
+- Each project card should show: Title, Description, Tech Stack used, GitHub link, Live Demo link (optional), Category.
+- In the Admin Panel, allow adding/editing/removing projects with all the above fields, and a category dropdown (Data Analytics or ML/AI Research).
+
+---
+
+## 5. HOBBIES & INTERESTS PAGE
+- Expand the current hobbies section to support more diverse items (e.g., Reading, Photography, Travel, Writing, etc.).
+- Add a new **"Blog Posts"** section on this page (or as a sub-section):
+  - Each blog post card shows: Title, Short Excerpt, External Link (e.g., Medium, LinkedIn article, personal blog), Date.
+  - In the Admin Panel, allow adding/editing/removing blog post entries with: Title, Excerpt, External URL, Date, Cover Image URL (optional).
+- In the Admin Panel, allow adding/editing/removing hobbies with a name, description, and optional icon (emoji or icon name).
+
+---
+
+## 6. RENAME "BIOGRAPHY" TO "EDUCATION"
+- Rename the "Biography" page/section to "Education" everywhere — navigation, page title, routes, internal references.
+- The Education section should support entries with: Degree, Institution, Duration (Start–End year), Description/Achievements.
+- In the Admin Panel, allow managing education entries.
+
+---
+
+## 7. ADMIN PANEL (Full Implementation)
+Create a protected Admin Panel at /admin route with a simple password login (store password in environment variable ADMIN_PASSWORD).
+
+The Admin Panel must have sections for managing:
+1. **Profile** — Profile picture URL, name, tagline/bio summary
+2. **CV** — Google Drive link for CV download
+3. **Certificates** — Add / Edit / Delete certificates
+4. **Research Papers** — Add / Edit / Delete papers
+5. **Projects** — Add / Edit / Delete projects (with category: Data Analytics or ML/AI Research)
+6. **Blog Posts** — Add / Edit / Delete blog post links
+7. **Hobbies** — Add / Edit / Delete hobbies
+8. **Education** — Add / Edit / Delete education entries
+
+All data should be stored persistently (use the existing database if one exists, otherwise use a JSON file or localStorage as fallback). All changes in the Admin Panel should reflect immediately on the public-facing pages.
+
+Use a clean sidebar layout for the Admin Panel with each section accessible from the sidebar.
+
+---
+
+## GENERAL NOTES
+- Keep the existing visual design/theme consistent.
+- Make all new sections mobile-responsive.
+- Do not break any existing functionality while making these changes.
+- Implement changes page by page, confirming each section works before moving to the next.

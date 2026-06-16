@@ -1,0 +1,155 @@
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useGetProfile, useUpdateProfile, getGetProfileQueryKey } from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Loader2 } from "lucide-react";
+
+const profileSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  tagline: z.string().min(1, "Tagline is required"),
+  profilePictureUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+  cvLink: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+});
+
+export default function ProfileAdmin() {
+  const { data: profile, isLoading } = useGetProfile();
+  const updateProfile = useUpdateProfile();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const form = useForm<z.infer<typeof profileSchema>>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      name: "",
+      tagline: "",
+      profilePictureUrl: "",
+      cvLink: "",
+    },
+  });
+
+  useEffect(() => {
+    if (profile) {
+      form.reset({
+        name: profile.name || "",
+        tagline: profile.tagline || "",
+        profilePictureUrl: profile.profilePictureUrl || "",
+        cvLink: profile.cvLink || "",
+      });
+    }
+  }, [profile, form]);
+
+  const onSubmit = (values: z.infer<typeof profileSchema>) => {
+    updateProfile.mutate(
+      {
+        data: {
+          name: values.name,
+          tagline: values.tagline,
+          profilePictureUrl: values.profilePictureUrl || null,
+          cvLink: values.cvLink || null,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: getGetProfileQueryKey() });
+          toast({ title: "Profile updated successfully" });
+        },
+        onError: () => {
+          toast({ title: "Failed to update profile", variant: "destructive" });
+        },
+      }
+    );
+  };
+
+  if (isLoading) return <div>Loading profile...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-serif font-bold">Profile</h2>
+        <p className="text-muted-foreground">Manage your personal information.</p>
+      </div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-2xl bg-card border border-border p-6 rounded-lg">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="tagline"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tagline</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={3} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="profilePictureUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Profile Picture URL</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="https://..." />
+                </FormControl>
+                {field.value && (
+                  <div className="mt-2">
+                    <img src={field.value} alt="Preview" className="w-16 h-16 rounded-full object-cover border border-border" />
+                  </div>
+                )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="cvLink"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>CV Google Drive Link</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="https://drive.google.com/..." />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" disabled={updateProfile.isPending}>
+            {updateProfile.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Save Changes
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
+}
