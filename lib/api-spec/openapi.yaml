@@ -937,7 +937,7 @@ components:
 
     Profile:
       type: object
-      required: [id, name, tagline]
+      required: [id, name, tagline, openToWork]
       properties:
         id:
           type: integer
@@ -955,6 +955,8 @@ components:
           type: ["string", "null"]
         bengaliQuote:
           type: ["string", "null"]
+        openToWork:
+          type: boolean
 
     ProfileInput:
       type: object
@@ -973,6 +975,8 @@ components:
           type: ["string", "null"]
         bengaliQuote:
           type: ["string", "null"]
+        openToWork:
+          type: boolean
 
     Certificate:
       type: object

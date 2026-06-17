@@ -1,4 +1,4 @@
-import { pgTable, text, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
@@ -11,6 +11,7 @@ export const profileTable = pgTable("profile", {
   bio: text("bio"),
   quote: text("quote"),
   bengaliQuote: text("bengali_quote"),
+  openToWork: boolean("open_to_work").notNull().default(false),
 });
 
 export const insertProfileSchema = createInsertSchema(profileTable).omit({ id: true });

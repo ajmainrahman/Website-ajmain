@@ -26,6 +26,7 @@ export const GetProfileResponse = zod.object({
   bio: zod.string().nullish(),
   quote: zod.string().nullish(),
   bengaliQuote: zod.string().nullish(),
+  openToWork: zod.boolean(),
 });
 
 /**
@@ -39,6 +40,7 @@ export const UpdateProfileBody = zod.object({
   bio: zod.string().nullish(),
   quote: zod.string().nullish(),
   bengaliQuote: zod.string().nullish(),
+  openToWork: zod.boolean().optional(),
 });
 
 export const UpdateProfileResponse = zod.object({
@@ -50,6 +52,7 @@ export const UpdateProfileResponse = zod.object({
   bio: zod.string().nullish(),
   quote: zod.string().nullish(),
   bengaliQuote: zod.string().nullish(),
+  openToWork: zod.boolean(),
 });
 
 /**

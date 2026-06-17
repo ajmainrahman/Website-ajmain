@@ -23,6 +23,7 @@ export interface Profile {
   quote?: string | null;
   /** @nullable */
   bengaliQuote?: string | null;
+  openToWork: boolean;
 }
 
 export interface ProfileInput {
@@ -38,6 +39,7 @@ export interface ProfileInput {
   quote?: string | null;
   /** @nullable */
   bengaliQuote?: string | null;
+  openToWork?: boolean;
 }
 
 export interface Certificate {

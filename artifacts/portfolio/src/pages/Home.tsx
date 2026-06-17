@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, Database, FlaskConical, User } from "lucide-react";
+import { ArrowRight, Database, FlaskConical, User, Briefcase } from "lucide-react";
 import {
   useGetProfile,
   useListResearchPapers,
@@ -21,7 +21,19 @@ export default function Home() {
   return (
     <div className="flex-1 flex flex-col justify-center px-6 md:px-12 py-20 max-w-6xl mx-auto w-full">
       <div className="max-w-4xl space-y-8">
-        
+
+        {/* Open to Work banner */}
+        {profile?.openToWork && (
+          <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium px-4 py-2 rounded-full">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+            </span>
+            <Briefcase size={14} />
+            Open to Work — actively seeking data science &amp; AI/ML opportunities
+          </div>
+        )}
+
         {/* Dual-tone signal */}
         <div className="flex items-center gap-3 text-sm font-medium uppercase tracking-wider text-muted-foreground">
           <span className="flex items-center gap-1.5 bg-secondary px-3 py-1 rounded-full"><FlaskConical size={14} /> Academic Research</span>

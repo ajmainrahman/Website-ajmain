@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import express from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import session from "express-session";
@@ -17,7 +17,7 @@ const PgSession = connectPgSimple(session);
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const app: Express = express();
+const app = express();
 
 app.set("trust proxy", 1);
 

@@ -17,7 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Loader2, Briefcase } from "lucide-react";
 
 const profileSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -27,6 +28,7 @@ const profileSchema = z.object({
   bio: z.string().optional().or(z.literal("")),
   quote: z.string().optional().or(z.literal("")),
   bengaliQuote: z.string().optional().or(z.literal("")),
+  openToWork: z.boolean(),
 });
 
 export default function ProfileAdmin() {
@@ -45,6 +47,7 @@ export default function ProfileAdmin() {
       bio: "",
       quote: "",
       bengaliQuote: "",
+      openToWork: false,
     },
   });
 
@@ -58,6 +61,7 @@ export default function ProfileAdmin() {
         bio: profile.bio || "",
         quote: profile.quote || "",
         bengaliQuote: profile.bengaliQuote || "",
+        openToWork: profile.openToWork ?? false,
       });
     }
   }, [profile, form]);
@@ -73,6 +77,7 @@ export default function ProfileAdmin() {
           bio: values.bio || null,
           quote: values.quote || null,
           bengaliQuote: values.bengaliQuote || null,
+          openToWork: values.openToWork,
         },
       },
       {
@@ -98,6 +103,33 @@ export default function ProfileAdmin() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-2xl bg-card border border-border p-6 rounded-lg">
+
+          {/* Open to Work toggle — prominent at the top */}
+          <FormField
+            control={form.control}
+            name="openToWork"
+            render={({ field }) => (
+              <FormItem className="flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+                <div className="space-y-0.5">
+                  <FormLabel className="flex items-center gap-2 text-emerald-800 font-semibold">
+                    <Briefcase size={16} />
+                    Open to Work
+                  </FormLabel>
+                  <p className="text-xs text-emerald-700">
+                    Shows a live pulsing banner on your homepage when enabled
+                  </p>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="data-[state=checked]:bg-emerald-600"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="name"

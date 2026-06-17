@@ -19,4 +19,5 @@ export interface ProfileInput {
   quote?: string | null;
   /** @nullable */
   bengaliQuote?: string | null;
+  openToWork?: boolean;
 }
