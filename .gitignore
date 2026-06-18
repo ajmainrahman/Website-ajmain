@@ -47,3 +47,7 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Generated Vercel function build output (do not commit)
+api/index.js
+api/*.js.map
