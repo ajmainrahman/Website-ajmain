@@ -20,6 +20,34 @@ console.log("Bundling API function...");
 const fnDir = `${OUT}/functions/api/index.func`;
 mkdirSync(fnDir, { recursive: true });
 
+// Shim pino and pino-http with console-based equivalents so the bundle has
+// zero native addons and zero worker-thread dependencies (both crash Vercel).
+const pinoShim = `
+const noop = () => {};
+const logger = {
+  info: (...a) => console.log('[INFO]', ...a),
+  error: (...a) => console.error('[ERROR]', ...a),
+  warn: (...a) => console.warn('[WARN]', ...a),
+  debug: noop,
+  trace: noop,
+  fatal: (...a) => console.error('[FATAL]', ...a),
+  child: () => logger,
+};
+module.exports = () => logger;
+module.exports.default = module.exports;
+`;
+
+const pinoHttpShim = `
+module.exports = () => (req, res, next) => next();
+module.exports.default = module.exports;
+`;
+
+const pinoPrettyShim = `module.exports = {};`;
+
+writeFileSync("/tmp/pino-shim.js", pinoShim);
+writeFileSync("/tmp/pino-http-shim.js", pinoHttpShim);
+writeFileSync("/tmp/pino-pretty-shim.js", pinoPrettyShim);
+
 await build({
   entryPoints: ["artifacts/api-server/src/app.ts"],
   bundle: true,
@@ -27,9 +55,13 @@ await build({
   target: "node20",
   format: "cjs",
   outfile: `${fnDir}/index.js`,
-  // Only exclude pg-native which is an optional native addon — everything else
-  // including pino, pino-http, pino-pretty must be bundled since Vercel
-  // serverless functions have no node_modules at runtime.
+  // Shim pino so it has no worker threads or native addons
+  alias: {
+    "pino": "/tmp/pino-shim.js",
+    "pino-http": "/tmp/pino-http-shim.js",
+    "pino-pretty": "/tmp/pino-pretty-shim.js",
+  },
+  // Only exclude the optional native pg addon
   external: ["pg-native"],
   sourcemap: false,
 });
@@ -55,9 +87,10 @@ writeFileSync(
     routes: [
       // API: route all /api/* to the function
       { src: "^/api(/.*)?$", dest: "/api/index" },
-      // SPA fallback: everything else → index.html
+      // Serve static files if they exist
       { handle: "filesystem" },
-      { src: "^/(?!api/).*", dest: "/index.html" }
+      // SPA fallback: everything else → index.html
+      { src: "^/.*", dest: "/index.html" }
     ]
   }, null, 2)
 );
