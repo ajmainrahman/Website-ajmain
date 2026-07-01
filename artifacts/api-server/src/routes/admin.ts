@@ -34,7 +34,13 @@ router.post("/admin/login", loginLimiter, async (req, res): Promise<void> => {
   }
 
   req.session.isAdmin = true;
-  res.json(AdminLoginResponse.parse({ message: "Login successful" }));
+  req.session.save((err) => {
+    if (err) {
+      res.status(500).json({ error: "Session save failed" });
+      return;
+    }
+    res.json(AdminLoginResponse.parse({ message: "Login successful" }));
+  });
 });
 
 router.post("/admin/logout", async (req, res): Promise<void> => {
