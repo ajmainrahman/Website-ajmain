@@ -5,7 +5,7 @@ import { mkdirSync, readFileSync, writeFileSync, cpSync } from "fs";
 
 globalThis.require = createRequire(import.meta.url);
 
-// Vercel Build Output API v3: write everything to .vercel/output/
+// Vercel Build Output API v3
 // https://vercel.com/docs/build-output-api/v3
 const OUT = ".vercel/output";
 
@@ -27,7 +27,10 @@ await build({
   target: "node20",
   format: "cjs",
   outfile: `${fnDir}/index.js`,
-  external: ["pg-native", "pino", "pino-pretty", "pino-http", "thread-stream"],
+  // Only exclude pg-native which is an optional native addon — everything else
+  // including pino, pino-http, pino-pretty must be bundled since Vercel
+  // serverless functions have no node_modules at runtime.
+  external: ["pg-native"],
   sourcemap: false,
 });
 
@@ -51,8 +54,9 @@ writeFileSync(
     version: 3,
     routes: [
       // API: route all /api/* to the function
-      { src: "^/api/(.*)", dest: "/api/index" },
+      { src: "^/api(/.*)?$", dest: "/api/index" },
       // SPA fallback: everything else → index.html
+      { handle: "filesystem" },
       { src: "^/(?!api/).*", dest: "/index.html" }
     ]
   }, null, 2)
