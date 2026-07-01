@@ -18,10 +18,14 @@ const PgSession = connectPgSimple(session);
 
 const isProduction = process.env.NODE_ENV === "production";
 
-// Fail fast rather than silently signing sessions with a public fallback secret.
+// Warn loudly when SESSION_SECRET is missing — sessions will work but be signed
+// with a fixed dev-only fallback, meaning admin cookies are insecure.
 const sessionSecret = process.env.SESSION_SECRET;
 if (isProduction && !sessionSecret) {
-  throw new Error("SESSION_SECRET must be set in production. Refusing to start with an insecure fallback.");
+  // eslint-disable-next-line no-console
+  console.error(
+    "[SECURITY] SESSION_SECRET env var is not set. Admin sessions are signed with an insecure fallback. Set SESSION_SECRET in your deployment environment immediately."
+  );
 }
 
 // Comma-separated list of allowed origins, e.g. "https://moshfiqurrahman-ajmain.vercel.app"

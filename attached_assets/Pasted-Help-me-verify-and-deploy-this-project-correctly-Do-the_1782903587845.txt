@@ -1,0 +1,25 @@
+Help me verify and deploy this project correctly. Do the following in order, running each command and checking its output before moving to the next, and tell me the result of each step clearly:
+
+1. Confirm the current git state: run `git remote -v`, `git log -1 --format="%H %s"`, and `git status`. Confirm origin points to https://github.com/ajmainrahman/Website-ajmain.git (not the old MoshfiqurRahman-Ajmain name) and that the working tree is clean.
+
+2. Install dependencies fresh and verify the project actually builds correctly in this environment:
+   - `pnpm install`
+   - `pnpm run typecheck` (from repo root)
+   - `node build-vercel.mjs`
+   Confirm this produces both `artifacts/portfolio/dist/` (frontend) AND `api/index.js` (bundled API function). If `api/index.js` is missing or the build errors out, stop and show me the exact error — don't proceed to deployment with a broken build.
+
+3. Install the Vercel CLI and deploy directly, bypassing GitHub entirely, since the GitHub-triggered auto-deploy has been stuck rebuilding an old commit regardless of new pushes:
+   - `npm install -g vercel`
+   - `vercel login` (this needs an interactive browser login — tell me when it's waiting for that so I can complete it)
+   - `vercel link` (link to my EXISTING project, don't create a new one — ask me to confirm which project if there's any ambiguity)
+   - `vercel env ls` — list what environment variables are currently set on the linked project and show me the full list (names only, not values)
+   - `vercel --prod` — deploy the current local code straight to production
+
+4. After deployment finishes, `vercel --prod` will print a live URL. Fetch that URL's `/api/healthz` endpoint (e.g. with `curl`) and show me the raw response. Then also curl `/api/profile` and show the response — I need to see whether it's real data, a 404, or a 500 error.
+
+5. If `vercel env ls` in step 3 does NOT show both `SESSION_SECRET` and `ALLOWED_ORIGINS`, add them now:
+   - `vercel env add SESSION_SECRET production` (generate a long random value for this, don't ask me for one)
+   - `vercel env add ALLOWED_ORIGINS production` (set the value to https://moshfiqurrahman-ajmain.vercel.app)
+   Then redeploy with `vercel --prod` again so the new env vars take effect, and repeat the curl checks from step 4.
+
+Report back after each numbered step with the actual command output, not a summary — I need to see the raw logs to diagnose from there.
