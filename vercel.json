@@ -33,7 +33,7 @@
       ]
     },
     {
-      "source": "/(.*\\.woff2?)",
+      "source": "/(.*\\.woff2)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -42,7 +42,16 @@
       ]
     },
     {
-      "source": "/(.*\\.(png|jpg|jpeg|webp|avif|gif))",
+      "source": "/(.*\\.woff)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.png)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -51,7 +60,52 @@
       ]
     },
     {
-      "source": "/(.*\\.(svg|ico))",
+      "source": "/(.*\\.jpg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.jpeg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.webp)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.gif)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.svg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.ico)",
       "headers": [
         {
           "key": "Cache-Control",
