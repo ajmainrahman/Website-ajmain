@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import pinoHttp from "pino-http";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
@@ -17,9 +18,23 @@ const PgSession = connectPgSimple(session);
 
 const isProduction = process.env.NODE_ENV === "production";
 
+// Fail fast rather than silently signing sessions with a public fallback secret.
+const sessionSecret = process.env.SESSION_SECRET;
+if (isProduction && !sessionSecret) {
+  throw new Error("SESSION_SECRET must be set in production. Refusing to start with an insecure fallback.");
+}
+
+// Comma-separated list of allowed origins, e.g. "https://moshfiqurrahman-ajmain.vercel.app"
+const allowedOrigins = (process.env.ALLOWED_ORIGINS ?? "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
 const app = express();
 
 app.set("trust proxy", 1);
+
+app.use(helmet());
 
 app.use(
   pinoHttp({
@@ -40,7 +55,19 @@ app.use(
     },
   }),
 );
-app.use(cors({ origin: true, credentials: true }));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow same-origin/non-browser requests (no Origin header) and anything in the whitelist.
+      if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -49,13 +76,13 @@ app.use(
       pool,
       createTableIfMissing: true,
     }),
-    secret: process.env.SESSION_SECRET ?? "portfolio-secret-fallback",
+    secret: sessionSecret ?? "portfolio-secret-fallback-dev-only",
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
       secure: isProduction,
-      sameSite: isProduction ? "none" : "lax",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24,
     },
   }),

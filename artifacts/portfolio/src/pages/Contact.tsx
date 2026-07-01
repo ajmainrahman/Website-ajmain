@@ -34,13 +34,26 @@ export default function Contact() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Message Sent",
-      description: "Thanks — your message is noted (demo only)",
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const res = await fetch("/api/contact-messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      toast({
+        title: "Message Sent",
+        description: "Thanks for reaching out — I'll get back to you soon.",
+      });
+      form.reset();
+    } catch {
+      toast({
+        title: "Something went wrong",
+        description: "Your message couldn't be sent. Please try again or reach out via LinkedIn/GitHub.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (

@@ -12,11 +12,13 @@ import skillsRouter from "./skills";
 import campusAmbassadorsRouter from "./campus_ambassadors";
 import photosRouter from "./photos";
 import storiesRouter from "./stories";
+import messagesRouter from "./messages";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
 router.use(adminRouter);
+router.use(messagesRouter);
 router.use(profileRouter);
 router.use(certificatesRouter);
 router.use(researchRouter);
