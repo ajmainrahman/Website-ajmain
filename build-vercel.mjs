@@ -1,15 +1,24 @@
 import { build } from "esbuild";
 import { createRequire } from "node:module";
 import { execSync } from "child_process";
-import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync, cpSync } from "fs";
 
 globalThis.require = createRequire(import.meta.url);
+
+// Vercel Build Output API v3: write everything to .vercel/output/
+// https://vercel.com/docs/build-output-api/v3
+const OUT = ".vercel/output";
 
 console.log("Building frontend...");
 execSync('pnpm -r --filter "./artifacts/portfolio" run build', { stdio: "inherit" });
 
-console.log("Bundling API for Vercel...");
-mkdirSync("api", { recursive: true });
+console.log("Copying static assets to .vercel/output/static ...");
+mkdirSync(`${OUT}/static`, { recursive: true });
+cpSync("artifacts/portfolio/dist", `${OUT}/static`, { recursive: true });
+
+console.log("Bundling API function...");
+const fnDir = `${OUT}/functions/api/index.func`;
+mkdirSync(fnDir, { recursive: true });
 
 await build({
   entryPoints: ["artifacts/api-server/src/app.ts"],
@@ -17,18 +26,36 @@ await build({
   platform: "node",
   target: "node20",
   format: "cjs",
-  outfile: "api/index.js",
+  outfile: `${fnDir}/index.js`,
   external: ["pg-native", "pino", "pino-pretty", "pino-http", "thread-stream"],
   sourcemap: false,
 });
 
-// Fix the export shape: esbuild's CJS output for `export default app`
-// produces exports.default = app, but Vercel's Node runtime needs
-// module.exports itself to BE the request handler (an Express app counts).
-const bundle = readFileSync("api/index.js", "utf8");
+// Fix export shape: Vercel Node runtime needs module.exports to BE the handler
+const bundle = readFileSync(`${fnDir}/index.js`, "utf8");
 writeFileSync(
-  "api/index.js",
+  `${fnDir}/index.js`,
   bundle + "\nmodule.exports = module.exports.default || module.exports;\n"
 );
 
-console.log("Bundle complete");
+// .vc-config.json tells Vercel this is a Node.js serverless function
+writeFileSync(
+  `${fnDir}/.vc-config.json`,
+  JSON.stringify({ runtime: "nodejs20.x", handler: "index.js", launcherType: "Nodejs" }, null, 2)
+);
+
+// config.json: routes for the entire deployment
+writeFileSync(
+  `${OUT}/config.json`,
+  JSON.stringify({
+    version: 3,
+    routes: [
+      // API: route all /api/* to the function
+      { src: "^/api/(.*)", dest: "/api/index" },
+      // SPA fallback: everything else → index.html
+      { src: "^/(?!api/).*", dest: "/index.html" }
+    ]
+  }, null, 2)
+);
+
+console.log("Build Output API complete");
