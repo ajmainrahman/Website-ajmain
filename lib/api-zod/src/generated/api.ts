@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.3.0
+ * OpenAPI spec version: 0.4.0
  */
 import * as zod from "zod";
 
@@ -27,6 +27,17 @@ export const GetProfileResponse = zod.object({
   quote: zod.string().nullish(),
   bengaliQuote: zod.string().nullish(),
   openToWork: zod.boolean(),
+  openToWorkText: zod.string().nullish(),
+  homeLabelResearch: zod.string().nullish(),
+  homeLabelIndustry: zod.string().nullish(),
+  researchGate: zod.string().nullish(),
+  orcid: zod.string().nullish(),
+  googleScholar: zod.string().nullish(),
+  academia: zod.string().nullish(),
+  researchInterests: zod.string().nullish(),
+  industryInterests: zod.string().nullish(),
+  problemSolvingText: zod.string().nullish(),
+  problemSolvingPlatforms: zod.string().nullish(),
 });
 
 /**
@@ -41,6 +52,17 @@ export const UpdateProfileBody = zod.object({
   quote: zod.string().nullish(),
   bengaliQuote: zod.string().nullish(),
   openToWork: zod.boolean().optional(),
+  openToWorkText: zod.string().nullish(),
+  homeLabelResearch: zod.string().nullish(),
+  homeLabelIndustry: zod.string().nullish(),
+  researchGate: zod.string().nullish(),
+  orcid: zod.string().nullish(),
+  googleScholar: zod.string().nullish(),
+  academia: zod.string().nullish(),
+  researchInterests: zod.string().nullish(),
+  industryInterests: zod.string().nullish(),
+  problemSolvingText: zod.string().nullish(),
+  problemSolvingPlatforms: zod.string().nullish(),
 });
 
 export const UpdateProfileResponse = zod.object({
@@ -53,6 +75,17 @@ export const UpdateProfileResponse = zod.object({
   quote: zod.string().nullish(),
   bengaliQuote: zod.string().nullish(),
   openToWork: zod.boolean(),
+  openToWorkText: zod.string().nullish(),
+  homeLabelResearch: zod.string().nullish(),
+  homeLabelIndustry: zod.string().nullish(),
+  researchGate: zod.string().nullish(),
+  orcid: zod.string().nullish(),
+  googleScholar: zod.string().nullish(),
+  academia: zod.string().nullish(),
+  researchInterests: zod.string().nullish(),
+  industryInterests: zod.string().nullish(),
+  problemSolvingText: zod.string().nullish(),
+  problemSolvingPlatforms: zod.string().nullish(),
 });
 
 /**
@@ -117,7 +150,7 @@ export const ListResearchPapersResponseItem = zod.object({
   id: zod.number(),
   title: zod.string(),
   authors: zod.string(),
-  abstract: zod.string(),
+  abstract: zod.string().nullish(),
   venue: zod.string(),
   year: zod.number(),
   paperLink: zod.string().nullish(),
@@ -133,7 +166,7 @@ export const ListResearchPapersResponse = zod.array(
 export const CreateResearchPaperBody = zod.object({
   title: zod.string(),
   authors: zod.string(),
-  abstract: zod.string(),
+  abstract: zod.string().nullish(),
   venue: zod.string(),
   year: zod.number(),
   paperLink: zod.string().nullish(),
@@ -150,7 +183,7 @@ export const UpdateResearchPaperParams = zod.object({
 export const UpdateResearchPaperBody = zod.object({
   title: zod.string().optional(),
   authors: zod.string().optional(),
-  abstract: zod.string().optional(),
+  abstract: zod.string().nullish(),
   venue: zod.string().optional(),
   year: zod.number().optional(),
   paperLink: zod.string().nullish(),
@@ -161,7 +194,7 @@ export const UpdateResearchPaperResponse = zod.object({
   id: zod.number(),
   title: zod.string(),
   authors: zod.string(),
-  abstract: zod.string(),
+  abstract: zod.string().nullish(),
   venue: zod.string(),
   year: zod.number(),
   paperLink: zod.string().nullish(),
@@ -582,6 +615,69 @@ export const UpdateStoryResponse = zod.object({
  * @summary Delete story (admin only)
  */
 export const DeleteStoryParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary List work experience entries
+ */
+export const ListJobsResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  company: zod.string(),
+  startDate: zod.string(),
+  endDate: zod.string().nullish(),
+  description: zod.string(),
+  location: zod.string().nullish(),
+  displayOrder: zod.number(),
+});
+export const ListJobsResponse = zod.array(ListJobsResponseItem);
+
+/**
+ * @summary Create job entry (admin only)
+ */
+export const CreateJobBody = zod.object({
+  title: zod.string(),
+  company: zod.string(),
+  startDate: zod.string(),
+  endDate: zod.string().nullish(),
+  description: zod.string(),
+  location: zod.string().nullish(),
+  displayOrder: zod.number().optional(),
+});
+
+/**
+ * @summary Update job entry (admin only)
+ */
+export const UpdateJobParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateJobBody = zod.object({
+  title: zod.string().optional(),
+  company: zod.string().optional(),
+  startDate: zod.string().optional(),
+  endDate: zod.string().nullish(),
+  description: zod.string().optional(),
+  location: zod.string().nullish(),
+  displayOrder: zod.number().optional(),
+});
+
+export const UpdateJobResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  company: zod.string(),
+  startDate: zod.string(),
+  endDate: zod.string().nullish(),
+  description: zod.string(),
+  location: zod.string().nullish(),
+  displayOrder: zod.number(),
+});
+
+/**
+ * @summary Delete job entry (admin only)
+ */
+export const DeleteJobParams = zod.object({
   id: zod.coerce.number(),
 });
 
