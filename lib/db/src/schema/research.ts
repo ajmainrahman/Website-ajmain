@@ -6,7 +6,7 @@ export const researchPapersTable = pgTable("research_papers", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   authors: text("authors").notNull(),
-  abstract: text("abstract").notNull(),
+  abstract: text("abstract"),
   venue: text("venue").notNull(),
   year: integer("year").notNull(),
   paperLink: text("paper_link"),
