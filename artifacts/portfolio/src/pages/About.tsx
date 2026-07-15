@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { Download, ExternalLink } from "lucide-react";
-import { useGetProfile, useListCertificates, useListSkills } from "@workspace/api-client-react";
+import { Download, ExternalLink, MapPin, Calendar } from "lucide-react";
+import { useGetProfile, useListCertificates, useListSkills, useListJobs } from "@workspace/api-client-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -8,6 +8,7 @@ export default function About() {
   const { data: profile } = useGetProfile();
   const { data: certificates } = useListCertificates();
   const { data: skills } = useListSkills();
+  const { data: jobs } = useListJobs();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedIssuer, setSelectedIssuer] = useState<string>("all");
@@ -33,6 +34,16 @@ export default function About() {
 
   const dataAnalystSkills = skills?.filter(s => s.type === "data_analyst") || [];
   const dataScientistSkills = skills?.filter(s => s.type === "data_scientist") || [];
+
+  const sortedJobs = jobs ? [...jobs].sort((a, b) => a.displayOrder - b.displayOrder) : [];
+
+  const researchInterestItems = profile?.researchInterests
+    ? profile.researchInterests.split("\n").map(s => s.trim()).filter(Boolean)
+    : ["Medical Imaging & Diagnostics", "Natural Language Processing (NLP)", "Sentiment Analysis in Regional Dialects", "Deep Learning Architectures"];
+
+  const industryInterestItems = profile?.industryInterests
+    ? profile.industryInterests.split("\n").map(s => s.trim()).filter(Boolean)
+    : ["Data Engineering & Architecture", "Business Intelligence & Analytics", "Predictive Customer Modeling", "End-to-End ML Deployment"];
 
   return (
     <div className="px-6 md:px-12 py-20 max-w-5xl mx-auto w-full space-y-16">
@@ -84,6 +95,37 @@ export default function About() {
           </Tooltip>
         </div>
       </section>
+
+      {/* Work Experience */}
+      {sortedJobs.length > 0 && (
+        <section className="space-y-8 pt-8 border-t border-border">
+          <h2 className="text-2xl font-serif font-bold">Work Experience</h2>
+          <div className="space-y-8">
+            {sortedJobs.map(job => (
+              <div key={job.id} className="relative pl-8 border-l-2 border-border pb-2 last:pb-0">
+                <div className="absolute w-3 h-3 bg-background border-2 border-accent rounded-full -left-[7px] top-1.5" />
+                <div className="space-y-1 mb-3">
+                  <h3 className="text-xl font-bold font-serif">{job.title}</h3>
+                  <p className="text-accent font-medium">{job.company}</p>
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground font-mono">
+                    <span className="flex items-center gap-1">
+                      <Calendar size={12} />
+                      {job.startDate} – {job.endDate || "Present"}
+                    </span>
+                    {job.location && (
+                      <span className="flex items-center gap-1">
+                        <MapPin size={12} />
+                        {job.location}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <p className="text-muted-foreground leading-relaxed text-sm max-w-3xl">{job.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="space-y-8 pt-8 border-t border-border">
         <h2 className="text-2xl font-serif font-bold">Technical Skills</h2>
@@ -189,19 +231,17 @@ export default function About() {
         <div className="space-y-4">
           <h2 className="text-2xl font-serif font-bold">Research Interests</h2>
           <ul className="space-y-2 text-muted-foreground">
-            <li>Medical Imaging & Diagnostics</li>
-            <li>Natural Language Processing (NLP)</li>
-            <li>Sentiment Analysis in Regional Dialects</li>
-            <li>Deep Learning Architectures</li>
+            {researchInterestItems.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
         </div>
         <div className="space-y-4">
           <h2 className="text-2xl font-serif font-bold">Industry Interests</h2>
           <ul className="space-y-2 text-muted-foreground">
-            <li>Data Engineering & Architecture</li>
-            <li>Business Intelligence & Analytics</li>
-            <li>Predictive Customer Modeling</li>
-            <li>End-to-End ML Deployment</li>
+            {industryInterestItems.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
         </div>
       </section>
