@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Api
-  version: 0.3.0
+  version: 0.4.0
   description: Portfolio API specification
 servers:
   - url: /api
@@ -31,6 +31,8 @@ tags:
     description: Photo operations
   - name: stories
     description: Stories operations
+  - name: jobs
+    description: Work experience / jobs operations
   - name: admin
     description: Admin auth operations
 paths:
@@ -879,6 +881,86 @@ paths:
         "404":
           description: Not found
 
+  /jobs:
+    get:
+      operationId: listJobs
+      tags: [jobs]
+      summary: List work experience entries
+      responses:
+        "200":
+          description: Jobs list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Job"
+    post:
+      operationId: createJob
+      tags: [jobs]
+      summary: Create job entry (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "401":
+          description: Unauthorized
+
+  /jobs/{id}:
+    patch:
+      operationId: updateJob
+      tags: [jobs]
+      summary: Update job entry (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteJob
+      tags: [jobs]
+      summary: Delete job entry (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
   /admin/login:
     post:
       operationId: adminLogin
@@ -892,7 +974,7 @@ paths:
               $ref: "#/components/schemas/AdminLoginInput"
       responses:
         "200":
-          description: Logged in
+          description: Login successful
           content:
             application/json:
               schema:
@@ -957,6 +1039,28 @@ components:
           type: ["string", "null"]
         openToWork:
           type: boolean
+        openToWorkText:
+          type: ["string", "null"]
+        homeLabelResearch:
+          type: ["string", "null"]
+        homeLabelIndustry:
+          type: ["string", "null"]
+        researchGate:
+          type: ["string", "null"]
+        orcid:
+          type: ["string", "null"]
+        googleScholar:
+          type: ["string", "null"]
+        academia:
+          type: ["string", "null"]
+        researchInterests:
+          type: ["string", "null"]
+        industryInterests:
+          type: ["string", "null"]
+        problemSolvingText:
+          type: ["string", "null"]
+        problemSolvingPlatforms:
+          type: ["string", "null"]
 
     ProfileInput:
       type: object
@@ -977,6 +1081,28 @@ components:
           type: ["string", "null"]
         openToWork:
           type: boolean
+        openToWorkText:
+          type: ["string", "null"]
+        homeLabelResearch:
+          type: ["string", "null"]
+        homeLabelIndustry:
+          type: ["string", "null"]
+        researchGate:
+          type: ["string", "null"]
+        orcid:
+          type: ["string", "null"]
+        googleScholar:
+          type: ["string", "null"]
+        academia:
+          type: ["string", "null"]
+        researchInterests:
+          type: ["string", "null"]
+        industryInterests:
+          type: ["string", "null"]
+        problemSolvingText:
+          type: ["string", "null"]
+        problemSolvingPlatforms:
+          type: ["string", "null"]
 
     Certificate:
       type: object
@@ -1026,7 +1152,7 @@ components:
 
     ResearchPaper:
       type: object
-      required: [id, title, authors, abstract, venue, year, tags]
+      required: [id, title, authors, venue, year, tags]
       properties:
         id:
           type: integer
@@ -1035,7 +1161,7 @@ components:
         authors:
           type: string
         abstract:
-          type: string
+          type: ["string", "null"]
         venue:
           type: string
         year:
@@ -1047,14 +1173,14 @@ components:
 
     ResearchPaperInput:
       type: object
-      required: [title, authors, abstract, venue, year, tags]
+      required: [title, authors, venue, year, tags]
       properties:
         title:
           type: string
         authors:
           type: string
         abstract:
-          type: string
+          type: ["string", "null"]
         venue:
           type: string
         year:
@@ -1072,7 +1198,7 @@ components:
         authors:
           type: string
         abstract:
-          type: string
+          type: ["string", "null"]
         venue:
           type: string
         year:
@@ -1401,6 +1527,64 @@ components:
           type: string
         imageUrl:
           type: ["string", "null"]
+
+    Job:
+      type: object
+      required: [id, title, company, startDate, description, displayOrder]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        company:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: ["string", "null"]
+        description:
+          type: string
+        location:
+          type: ["string", "null"]
+        displayOrder:
+          type: integer
+
+    JobInput:
+      type: object
+      required: [title, company, startDate, description]
+      properties:
+        title:
+          type: string
+        company:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: ["string", "null"]
+        description:
+          type: string
+        location:
+          type: ["string", "null"]
+        displayOrder:
+          type: integer
+
+    JobUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        company:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: ["string", "null"]
+        description:
+          type: string
+        location:
+          type: ["string", "null"]
+        displayOrder:
+          type: integer
 
     AdminLoginInput:
       type: object
