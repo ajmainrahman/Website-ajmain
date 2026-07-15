@@ -1,13 +1,32 @@
 import { ExternalLink, Github } from "lucide-react";
-import { useListProjects } from "@workspace/api-client-react";
+import { useListProjects, useGetProfile } from "@workspace/api-client-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
+const DEFAULT_PROBLEM_SOLVING_TEXT =
+  'From the first semester (2020) I started solving problems in various Online judges and different websites. Till now I have solved around 250+ problems in C, Python and MySQL.';
+
+const DEFAULT_PLATFORMS = ["Beecrowd", "HackerRank", "Toph", "LeetCode", "StrataScratch", "DataLemur"];
+
 export default function Projects() {
   const { data: projects } = useListProjects();
+  const { data: profile } = useGetProfile();
 
   const dataProjects = projects?.filter(p => p.category === "data-analytics") || [];
   const mlProjects = projects?.filter(p => p.category === "ml-ai-research") || [];
+
+  const problemSolvingText = profile?.problemSolvingText || DEFAULT_PROBLEM_SOLVING_TEXT;
+
+  const platforms: { name: string; url?: string }[] = profile?.problemSolvingPlatforms
+    ? profile.problemSolvingPlatforms
+        .split("\n")
+        .map(line => line.trim())
+        .filter(Boolean)
+        .map(line => {
+          const [name, url] = line.split("|").map(s => s.trim());
+          return { name, url: url || undefined };
+        })
+    : DEFAULT_PLATFORMS.map(name => ({ name }));
 
   return (
     <div className="px-6 md:px-12 py-20 max-w-5xl mx-auto w-full space-y-16">
@@ -21,14 +40,26 @@ export default function Projects() {
         <h2 className="text-2xl font-serif font-bold border-l-4 border-accent pl-4">Foundational Problem Solving</h2>
         <div className="bg-card border border-border p-8 rounded-lg">
           <p className="text-lg leading-relaxed mb-8">
-            "From the first semester (2020) I started solving problems in various Online judges and different websites. Till now I have solved around <strong className="text-foreground text-accent">250+ problems</strong> in C, Python and MySQL."
+            "{problemSolvingText}"
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {["Beecrowd", "HackerRank", "Toph", "LeetCode", "StrataScratch", "DataLemur"].map((platform) => (
-              <div key={platform} className="bg-secondary text-secondary-foreground text-center py-3 px-4 rounded-md font-mono text-sm font-medium">
-                {platform}
-              </div>
+            {platforms.map((platform) => (
+              platform.url ? (
+                <a
+                  key={platform.name}
+                  href={platform.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bg-secondary text-secondary-foreground text-center py-3 px-4 rounded-md font-mono text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                >
+                  {platform.name}
+                </a>
+              ) : (
+                <div key={platform.name} className="bg-secondary text-secondary-foreground text-center py-3 px-4 rounded-md font-mono text-sm font-medium">
+                  {platform.name}
+                </div>
+              )
             ))}
           </div>
         </div>
