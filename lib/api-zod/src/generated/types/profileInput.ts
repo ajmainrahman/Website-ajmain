@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.3.0
+ * OpenAPI spec version: 0.4.0
  */
 
 export interface ProfileInput {
@@ -20,4 +20,26 @@ export interface ProfileInput {
   /** @nullable */
   bengaliQuote?: string | null;
   openToWork?: boolean;
+  /** @nullable */
+  openToWorkText?: string | null;
+  /** @nullable */
+  homeLabelResearch?: string | null;
+  /** @nullable */
+  homeLabelIndustry?: string | null;
+  /** @nullable */
+  researchGate?: string | null;
+  /** @nullable */
+  orcid?: string | null;
+  /** @nullable */
+  googleScholar?: string | null;
+  /** @nullable */
+  academia?: string | null;
+  /** @nullable */
+  researchInterests?: string | null;
+  /** @nullable */
+  industryInterests?: string | null;
+  /** @nullable */
+  problemSolvingText?: string | null;
+  /** @nullable */
+  problemSolvingPlatforms?: string | null;
 }
