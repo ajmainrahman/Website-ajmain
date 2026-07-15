@@ -13,7 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -22,7 +22,7 @@ import { Edit2, Trash2, Plus } from "lucide-react";
 const formSchema = z.object({
   title: z.string().min(1),
   authors: z.string().min(1),
-  abstract: z.string().min(1),
+  abstract: z.string().optional().or(z.literal("")),
   venue: z.string().min(1),
   year: z.coerce.number().int().min(1900),
   paperLink: z.string().url().optional().or(z.literal("")),
@@ -54,7 +54,7 @@ export default function ResearchAdmin() {
   const openEdit = (item: any) => {
     setEditingId(item.id);
     form.reset({
-      title: item.title, authors: item.authors, abstract: item.abstract,
+      title: item.title, authors: item.authors, abstract: item.abstract ?? "",
       venue: item.venue, year: item.year, paperLink: item.paperLink || "", tags: item.tags
     });
     setIsDialogOpen(true);
@@ -71,7 +71,11 @@ export default function ResearchAdmin() {
   };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const payload = { ...values, paperLink: values.paperLink || null };
+    const payload = {
+      ...values,
+      abstract: values.abstract || null,
+      paperLink: values.paperLink || null,
+    };
     if (editingId) {
       updateMutation.mutate({ id: editingId, data: payload }, {
         onSuccess: () => { queryClient.invalidateQueries({ queryKey: getListResearchPapersQueryKey() }); setIsDialogOpen(false); }
@@ -105,33 +109,46 @@ export default function ResearchAdmin() {
             </div>
           </div>
         ))}
+        {(!list || list.length === 0) && (
+          <p className="text-muted-foreground italic text-center py-8">No research papers yet.</p>
+        )}
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader><DialogTitle>{editingId ? "Edit" : "Add"}</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{editingId ? "Edit" : "Add"} Research Paper</DialogTitle></DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField control={form.control} name="title" render={({ field }) => (
-                <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="authors" render={({ field }) => (
-                <FormItem><FormLabel>Authors</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>Authors</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="venue" render={({ field }) => (
-                <FormItem><FormLabel>Venue</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>Venue / Journal / Conference</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="year" render={({ field }) => (
-                <FormItem><FormLabel>Year</FormLabel><FormControl><Input type="number" {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>Year</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="abstract" render={({ field }) => (
-                <FormItem><FormLabel>Abstract</FormLabel><FormControl><Textarea rows={4} {...field} /></FormControl></FormItem>
+                <FormItem>
+                  <FormLabel>Abstract <span className="text-muted-foreground font-normal">(optional)</span></FormLabel>
+                  <FormControl><Textarea rows={4} {...field} placeholder="Paper abstract..." /></FormControl>
+                  <FormDescription>Leave blank if you prefer not to show the abstract publicly.</FormDescription>
+                  <FormMessage />
+                </FormItem>
               )} />
               <FormField control={form.control} name="paperLink" render={({ field }) => (
-                <FormItem><FormLabel>Link</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>Paper Link (optional)</FormLabel><FormControl><Input {...field} placeholder="https://..." /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="tags" render={({ field }) => (
-                <FormItem><FormLabel>Tags (comma separated)</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                <FormItem>
+                  <FormLabel>Tags</FormLabel>
+                  <FormControl><Input {...field} placeholder="NLP, Deep Learning, Medical Imaging" /></FormControl>
+                  <FormDescription>Comma-separated tags.</FormDescription>
+                  <FormMessage />
+                </FormItem>
               )} />
               <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>Save</Button>
             </form>
