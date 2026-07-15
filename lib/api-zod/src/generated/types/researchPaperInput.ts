@@ -3,13 +3,14 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.3.0
+ * OpenAPI spec version: 0.4.0
  */
 
 export interface ResearchPaperInput {
   title: string;
   authors: string;
-  abstract: string;
+  /** @nullable */
+  abstract?: string | null;
   venue: string;
   year: number;
   /** @nullable */
