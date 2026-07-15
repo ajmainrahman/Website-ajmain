@@ -10,3 +10,4 @@ export * from "./campus_ambassadors";
 export * from "./photos";
 export * from "./stories";
 export * from "./messages";
+export * from "./jobs";
