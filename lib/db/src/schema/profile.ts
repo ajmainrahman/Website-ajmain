@@ -12,6 +12,17 @@ export const profileTable = pgTable("profile", {
   quote: text("quote"),
   bengaliQuote: text("bengali_quote"),
   openToWork: boolean("open_to_work").notNull().default(false),
+  openToWorkText: text("open_to_work_text"),
+  homeLabelResearch: text("home_label_research"),
+  homeLabelIndustry: text("home_label_industry"),
+  researchGate: text("research_gate"),
+  orcid: text("orcid"),
+  googleScholar: text("google_scholar"),
+  academia: text("academia"),
+  researchInterests: text("research_interests"),
+  industryInterests: text("industry_interests"),
+  problemSolvingText: text("problem_solving_text"),
+  problemSolvingPlatforms: text("problem_solving_platforms"),
 });
 
 export const insertProfileSchema = createInsertSchema(profileTable).omit({ id: true });
