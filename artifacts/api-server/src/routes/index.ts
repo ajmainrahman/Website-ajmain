@@ -13,6 +13,7 @@ import campusAmbassadorsRouter from "./campus_ambassadors";
 import photosRouter from "./photos";
 import storiesRouter from "./stories";
 import messagesRouter from "./messages";
+import jobsRouter from "./jobs";
 
 const router: IRouter = Router();
 
@@ -30,5 +31,6 @@ router.use(skillsRouter);
 router.use(campusAmbassadorsRouter);
 router.use(photosRouter);
 router.use(storiesRouter);
+router.use(jobsRouter);
 
 export default router;
