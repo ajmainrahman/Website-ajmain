@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
+import { useState } from "react";
 import {
   useAdminMe,
   useAdminLogin,
@@ -23,9 +22,11 @@ import SkillsAdmin from "./admin/SkillsAdmin";
 import CampusAmbassadorsAdmin from "./admin/CampusAmbassadorsAdmin";
 import PhotosAdmin from "./admin/PhotosAdmin";
 import StoriesAdmin from "./admin/StoriesAdmin";
+import JobsAdmin from "./admin/JobsAdmin";
 
 const SECTIONS = [
   { id: "profile", label: "Profile" },
+  { id: "jobs", label: "Work Experience" },
   { id: "education", label: "Education" },
   { id: "certificates", label: "Certificates" },
   { id: "research", label: "Research Papers" },
@@ -94,6 +95,7 @@ export default function Admin() {
       <main className="flex-1 ml-64 p-8 md:p-12 overflow-y-auto">
         <div className="max-w-4xl mx-auto">
           {activeSection === "profile" && <ProfileAdmin />}
+          {activeSection === "jobs" && <JobsAdmin />}
           {activeSection === "education" && <EducationAdmin />}
           {activeSection === "certificates" && <CertificatesAdmin />}
           {activeSection === "research" && <ResearchAdmin />}
