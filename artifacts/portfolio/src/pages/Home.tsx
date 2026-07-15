@@ -6,6 +6,7 @@ import {
   useListProjects,
   useListCertificates,
   useListSkills,
+  useListJobs,
 } from "@workspace/api-client-react";
 
 export default function Home() {
@@ -14,9 +15,15 @@ export default function Home() {
   const { data: projects } = useListProjects();
   const { data: certificates } = useListCertificates();
   const { data: skills } = useListSkills();
+  const { data: jobs } = useListJobs();
 
   const recentPapers = papers?.slice(0, 2) || [];
   const techTags = skills?.filter(s => s.type === 'tech_tag') || [];
+  const recentJobs = jobs ? [...jobs].sort((a, b) => a.displayOrder - b.displayOrder).slice(0, 2) : [];
+
+  const labelResearch = profile?.homeLabelResearch || "Academic Research";
+  const labelIndustry = profile?.homeLabelIndustry || "Applied Data Products";
+  const openToWorkText = profile?.openToWorkText || "actively seeking data science & AI/ML opportunities";
 
   return (
     <div className="flex-1 flex flex-col justify-center px-6 md:px-12 py-20 max-w-6xl mx-auto w-full">
@@ -30,15 +37,15 @@ export default function Home() {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
             </span>
             <Briefcase size={14} />
-            Open to Work — actively seeking data science &amp; AI/ML opportunities
+            Open to Work — {openToWorkText}
           </div>
         )}
 
         {/* Dual-tone signal */}
         <div className="flex items-center gap-3 text-sm font-medium uppercase tracking-wider text-muted-foreground">
-          <span className="flex items-center gap-1.5 bg-secondary px-3 py-1 rounded-full"><FlaskConical size={14} /> Academic Research</span>
+          <span className="flex items-center gap-1.5 bg-secondary px-3 py-1 rounded-full"><FlaskConical size={14} /> {labelResearch}</span>
           <span className="opacity-50">|</span>
-          <span className="flex items-center gap-1.5 bg-secondary px-3 py-1 rounded-full"><Database size={14} /> Applied Data Products</span>
+          <span className="flex items-center gap-1.5 bg-secondary px-3 py-1 rounded-full"><Database size={14} /> {labelIndustry}</span>
         </div>
 
         <div className="flex items-center gap-6">
@@ -91,9 +98,33 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* Recent Work Experience */}
+        {recentJobs.length > 0 && (
+          <div className="pt-8 border-t border-border">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Recent Experience</h3>
+              <Link href="/about" className="text-accent hover:underline text-sm font-medium inline-flex items-center gap-1">
+                View all <ArrowRight size={14} />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {recentJobs.map(job => (
+                <div key={job.id} className="bg-card border border-border p-5 rounded-lg space-y-1">
+                  <p className="font-semibold font-serif">{job.title}</p>
+                  <p className="text-sm text-accent font-medium">{job.company}</p>
+                  <p className="text-xs text-muted-foreground font-mono">
+                    {job.startDate} – {job.endDate || "Present"}
+                    {job.location ? ` · ${job.location}` : ""}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Highlights Preview */}
         {recentPapers.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-border mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-border">
             <div className="space-y-4">
               <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Latest Publication</h3>
               <p className="font-serif text-xl font-medium line-clamp-2">{recentPapers[0]?.title}</p>
