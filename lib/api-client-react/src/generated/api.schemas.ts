@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Api
  * Portfolio API specification
- * OpenAPI spec version: 0.3.0
+ * OpenAPI spec version: 0.4.0
  */
 export interface HealthStatus {
   status: string;
@@ -24,6 +24,28 @@ export interface Profile {
   /** @nullable */
   bengaliQuote?: string | null;
   openToWork: boolean;
+  /** @nullable */
+  openToWorkText?: string | null;
+  /** @nullable */
+  homeLabelResearch?: string | null;
+  /** @nullable */
+  homeLabelIndustry?: string | null;
+  /** @nullable */
+  researchGate?: string | null;
+  /** @nullable */
+  orcid?: string | null;
+  /** @nullable */
+  googleScholar?: string | null;
+  /** @nullable */
+  academia?: string | null;
+  /** @nullable */
+  researchInterests?: string | null;
+  /** @nullable */
+  industryInterests?: string | null;
+  /** @nullable */
+  problemSolvingText?: string | null;
+  /** @nullable */
+  problemSolvingPlatforms?: string | null;
 }
 
 export interface ProfileInput {
@@ -40,6 +62,28 @@ export interface ProfileInput {
   /** @nullable */
   bengaliQuote?: string | null;
   openToWork?: boolean;
+  /** @nullable */
+  openToWorkText?: string | null;
+  /** @nullable */
+  homeLabelResearch?: string | null;
+  /** @nullable */
+  homeLabelIndustry?: string | null;
+  /** @nullable */
+  researchGate?: string | null;
+  /** @nullable */
+  orcid?: string | null;
+  /** @nullable */
+  googleScholar?: string | null;
+  /** @nullable */
+  academia?: string | null;
+  /** @nullable */
+  researchInterests?: string | null;
+  /** @nullable */
+  industryInterests?: string | null;
+  /** @nullable */
+  problemSolvingText?: string | null;
+  /** @nullable */
+  problemSolvingPlatforms?: string | null;
 }
 
 export interface Certificate {
@@ -74,7 +118,8 @@ export interface ResearchPaper {
   id: number;
   title: string;
   authors: string;
-  abstract: string;
+  /** @nullable */
+  abstract?: string | null;
   venue: string;
   year: number;
   /** @nullable */
@@ -85,7 +130,8 @@ export interface ResearchPaper {
 export interface ResearchPaperInput {
   title: string;
   authors: string;
-  abstract: string;
+  /** @nullable */
+  abstract?: string | null;
   venue: string;
   year: number;
   /** @nullable */
@@ -96,7 +142,8 @@ export interface ResearchPaperInput {
 export interface ResearchPaperUpdate {
   title?: string;
   authors?: string;
-  abstract?: string;
+  /** @nullable */
+  abstract?: string | null;
   venue?: string;
   year?: number;
   /** @nullable */
@@ -305,6 +352,43 @@ export interface StoryUpdate {
   body?: string;
   /** @nullable */
   imageUrl?: string | null;
+}
+
+export interface Job {
+  id: number;
+  title: string;
+  company: string;
+  startDate: string;
+  /** @nullable */
+  endDate?: string | null;
+  description: string;
+  /** @nullable */
+  location?: string | null;
+  displayOrder: number;
+}
+
+export interface JobInput {
+  title: string;
+  company: string;
+  startDate: string;
+  /** @nullable */
+  endDate?: string | null;
+  description: string;
+  /** @nullable */
+  location?: string | null;
+  displayOrder?: number;
+}
+
+export interface JobUpdate {
+  title?: string;
+  company?: string;
+  startDate?: string;
+  /** @nullable */
+  endDate?: string | null;
+  description?: string;
+  /** @nullable */
+  location?: string | null;
+  displayOrder?: number;
 }
 
 export interface AdminLoginInput {
