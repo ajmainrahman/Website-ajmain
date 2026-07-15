@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -189,7 +190,16 @@ export default function EducationAdmin() {
                 )} />
               </div>
               <FormField control={form.control} name="description" render={({ field }) => (
-                <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} rows={3} /></FormControl><FormMessage /></FormItem>
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} rows={6} placeholder={"CGPA: 3.70 out of 4.0\nProblem-Solving, Data Structure, Algorithm\nCalculus, Complex Variables and Linear Algebra\nStatistics and Probability"} />
+                  </FormControl>
+                  <FormDescription>
+                    Enter each bullet point on a new line. The page will render each line as a separate bullet point automatically.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
               )} />
               <div className="flex justify-end pt-4">
                 <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
