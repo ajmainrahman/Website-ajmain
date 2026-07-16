@@ -23,6 +23,9 @@ export const profileTable = pgTable("profile", {
   industryInterests: text("industry_interests"),
   problemSolvingText: text("problem_solving_text"),
   problemSolvingPlatforms: text("problem_solving_platforms"),
+  location: text("location"),
+  websiteUrl: text("website_url"),
+  joinedDate: text("joined_date"),
 });
 
 export const insertProfileSchema = createInsertSchema(profileTable).omit({ id: true });
