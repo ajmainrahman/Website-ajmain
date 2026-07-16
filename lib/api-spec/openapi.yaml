@@ -1061,6 +1061,12 @@ components:
           type: ["string", "null"]
         problemSolvingPlatforms:
           type: ["string", "null"]
+        location:
+          type: ["string", "null"]
+        websiteUrl:
+          type: ["string", "null"]
+        joinedDate:
+          type: ["string", "null"]
 
     ProfileInput:
       type: object
@@ -1102,6 +1108,12 @@ components:
         problemSolvingText:
           type: ["string", "null"]
         problemSolvingPlatforms:
+          type: ["string", "null"]
+        location:
+          type: ["string", "null"]
+        websiteUrl:
+          type: ["string", "null"]
+        joinedDate:
           type: ["string", "null"]
 
     Certificate:
