@@ -38,6 +38,9 @@ export const GetProfileResponse = zod.object({
   industryInterests: zod.string().nullish(),
   problemSolvingText: zod.string().nullish(),
   problemSolvingPlatforms: zod.string().nullish(),
+  location: zod.string().nullish(),
+  websiteUrl: zod.string().nullish(),
+  joinedDate: zod.string().nullish(),
 });
 
 /**
@@ -63,6 +66,9 @@ export const UpdateProfileBody = zod.object({
   industryInterests: zod.string().nullish(),
   problemSolvingText: zod.string().nullish(),
   problemSolvingPlatforms: zod.string().nullish(),
+  location: zod.string().nullish(),
+  websiteUrl: zod.string().nullish(),
+  joinedDate: zod.string().nullish(),
 });
 
 export const UpdateProfileResponse = zod.object({
@@ -86,6 +92,9 @@ export const UpdateProfileResponse = zod.object({
   industryInterests: zod.string().nullish(),
   problemSolvingText: zod.string().nullish(),
   problemSolvingPlatforms: zod.string().nullish(),
+  location: zod.string().nullish(),
+  websiteUrl: zod.string().nullish(),
+  joinedDate: zod.string().nullish(),
 });
 
 /**
