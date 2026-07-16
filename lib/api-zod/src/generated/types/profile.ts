@@ -43,4 +43,10 @@ export interface Profile {
   problemSolvingText?: string | null;
   /** @nullable */
   problemSolvingPlatforms?: string | null;
+  /** @nullable */
+  location?: string | null;
+  /** @nullable */
+  websiteUrl?: string | null;
+  /** @nullable */
+  joinedDate?: string | null;
 }
