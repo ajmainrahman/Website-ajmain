@@ -31,6 +31,9 @@ const profileSchema = z.object({
   bengaliQuote: z.string().optional().or(z.literal("")),
   openToWork: z.boolean(),
   openToWorkText: z.string().optional().or(z.literal("")),
+  location: z.string().optional().or(z.literal("")),
+  websiteUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+  joinedDate: z.string().optional().or(z.literal("")),
   homeLabelResearch: z.string().optional().or(z.literal("")),
   homeLabelIndustry: z.string().optional().or(z.literal("")),
   researchGate: z.string().url("Must be a valid URL").optional().or(z.literal("")),
@@ -62,6 +65,9 @@ export default function ProfileAdmin() {
       bengaliQuote: "",
       openToWork: false,
       openToWorkText: "",
+      location: "",
+      websiteUrl: "",
+      joinedDate: "",
       homeLabelResearch: "",
       homeLabelIndustry: "",
       researchGate: "",
@@ -87,6 +93,9 @@ export default function ProfileAdmin() {
         bengaliQuote: profile.bengaliQuote || "",
         openToWork: profile.openToWork ?? false,
         openToWorkText: profile.openToWorkText || "",
+        location: profile.location || "",
+        websiteUrl: profile.websiteUrl || "",
+        joinedDate: profile.joinedDate || "",
         homeLabelResearch: profile.homeLabelResearch || "",
         homeLabelIndustry: profile.homeLabelIndustry || "",
         researchGate: profile.researchGate || "",
@@ -114,6 +123,9 @@ export default function ProfileAdmin() {
           bengaliQuote: values.bengaliQuote || null,
           openToWork: values.openToWork,
           openToWorkText: values.openToWorkText || null,
+          location: values.location || null,
+          websiteUrl: values.websiteUrl || null,
+          joinedDate: values.joinedDate || null,
           homeLabelResearch: values.homeLabelResearch || null,
           homeLabelIndustry: values.homeLabelIndustry || null,
           researchGate: values.researchGate || null,
@@ -227,8 +239,24 @@ export default function ProfileAdmin() {
               <FormItem><FormLabel>Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="tagline" render={({ field }) => (
-              <FormItem><FormLabel>Tagline</FormLabel><FormControl><Textarea {...field} rows={2} /></FormControl><FormMessage /></FormItem>
+              <FormItem>
+                <FormLabel>Tagline</FormLabel>
+                <FormControl><Textarea {...field} rows={2} /></FormControl>
+                <FormDescription>Shown as your one-liner on the homepage. Use " | " to separate multiple roles.</FormDescription>
+                <FormMessage />
+              </FormItem>
             )} />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <FormField control={form.control} name="location" render={({ field }) => (
+                <FormItem><FormLabel>Location</FormLabel><FormControl><Input {...field} placeholder="Bangladesh" /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="joinedDate" render={({ field }) => (
+                <FormItem><FormLabel>Joined Date</FormLabel><FormControl><Input {...field} placeholder="Jan 2022" /></FormControl><FormDescription>Shown on homepage info row.</FormDescription><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="websiteUrl" render={({ field }) => (
+                <FormItem><FormLabel>Website / GitHub URL</FormLabel><FormControl><Input {...field} placeholder="https://github.com/..." /></FormControl><FormMessage /></FormItem>
+              )} />
+            </div>
             <FormField control={form.control} name="bio" render={({ field }) => (
               <FormItem><FormLabel>Bio</FormLabel><FormControl><Textarea {...field} rows={4} placeholder="Full professional biography..." /></FormControl><FormMessage /></FormItem>
             )} />
